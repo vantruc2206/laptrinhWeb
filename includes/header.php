@@ -20,7 +20,7 @@ $navCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC LIMIT 5
 
 <nav class="navbar">
     <div class="container">
-        <a href="index.php" class="navbar-brand">NewsDaily.</a>
+        <a href="index.php" class="navbar-brand">Báo hơi mới</a>
         
         <div class="nav-links">
             <a href="index.php">Trang chủ</a>
@@ -31,8 +31,9 @@ $navCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC LIMIT 5
             <?php if(isLoggedIn()): ?>
                 <?php if(isAdmin()): ?>
                     <a href="admin/index.php" style="color: var(--primary);">Trang quản trị</a>
+                <?php else: ?>
+                    <a href="auth/logout.php" class="btn btn-secondary" style="padding: 0.25rem 0.75rem;">Đăng xuất</a>
                 <?php endif; ?>
-                <a href="auth/logout.php" class="btn btn-secondary" style="padding: 0.25rem 0.75rem;">Đăng xuất</a>
             <?php else: ?>
                 <a href="auth/login.php" class="btn btn-primary" style="padding: 0.25rem 0.75rem; color: #fff;">Đăng nhập</a>
             <?php endif; ?>

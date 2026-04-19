@@ -19,8 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_role'] = $user['role'];
-            
-            redirect($user['role'] === 'admin' ? '../admin/index.php' : '../index.php');
+            redirect('../index.php');
         } else {
             $error = "Tên đăng nhập hoặc mật khẩu không hợp lệ.";
         }

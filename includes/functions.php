@@ -4,28 +4,28 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once __DIR__ . '/config.php';
 
-// Helper to sanitize input
+// Hàm làm sạch dữ liệu đầu vào
 function sanitize($data) {
     return htmlspecialchars(strip_tags(trim($data)));
 }
 
-// Check if user is logged in
+// Kiểm tra xem người dùng đã đăng nhập chưa
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// Check if user is admin
+// Kiểm tra xem người dùng có phải là admin không
 function isAdmin() {
     return isLoggedIn() && isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
 }
 
-// Redirect helper
+// Hàm chuyển hướng
 function redirect($url) {
     header("Location: $url");
     exit();
 }
 
-// Generate slug for articles and categories
+// Tạo slug cho bài viết và danh mục
 function generateSlug($string) {
     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
     return $slug;

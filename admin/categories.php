@@ -86,7 +86,7 @@ if (isset($_GET['success'])) {
                     <td><span class="badge badge-success"><?= $row['count'] ?></span></td>
                     <td class="action-links">
                         <a href="?action=edit&id=<?= $row['id'] ?>" class="edit">Sửa</a>
-                        <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này? Tất cả bài viết liên quan sẽ bị xóa.');">Xóa</a>
+                        <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Xác nhận xóa danh mục này? LƯU Ý: Toàn bộ bài viết thuộc danh mục này cũng sẽ bị xóa vĩnh viễn!');">Xóa</a>
                     </td>
                 </tr>
                 <?php endwhile; ?>

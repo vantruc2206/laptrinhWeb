@@ -5,7 +5,7 @@ $action = $_GET['action'] ?? 'list';
 $error = '';
 $success = '';
 
-// Handle Delete
+// Xử lý Xóa
 if ($action == 'delete' && isset($_GET['id']) && $_GET['id'] != $_SESSION['user_id']) {
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     if ($stmt->execute([$_GET['id']])) {
@@ -13,7 +13,7 @@ if ($action == 'delete' && isset($_GET['id']) && $_GET['id'] != $_SESSION['user_
     }
 }
 
-// Handle Form Submission (Create/Edit)
+// Xử lý Form (Tạo mới/Chỉnh sửa)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = sanitize($_POST['username']);
     $email = sanitize($_POST['email']);
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Handle success messages
+// Xử lý thông báo thành công
 if (isset($_GET['success'])) {
     $msgs = ['created' => 'Tạo người dùng thành công.', 'updated' => 'Cập nhật người dùng thành công.', 'deleted' => 'Đã xóa người dùng.'];
     $success = $msgs[$_GET['success']] ?? '';
@@ -103,7 +103,7 @@ if (isset($_GET['success'])) {
                     <td class="action-links">
                         <a href="?action=edit&id=<?= $row['id'] ?>" class="edit">Sửa</a>
                         <?php if ($row['id'] != $_SESSION['user_id']): ?>
-                            <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');">Xóa</a>
+                            <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Cảnh báo: Bạn có chắc chắn muốn xóa người dùng này vĩnh viễn không?');">Xóa</a>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -112,7 +112,7 @@ if (isset($_GET['success'])) {
         </table>
     </div>
 <?php else: 
-    // Create or Edit Form
+    // Form Tạo mới hoặc Chỉnh sửa
     $user = ['username' => '', 'email' => '', 'role' => 'user'];
     if ($action == 'edit' && isset($_GET['id'])) {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");

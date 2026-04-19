@@ -142,7 +142,7 @@ $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC")->
                     <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
                     <td class="action-links">
                         <a href="?action=edit&id=<?= $row['id'] ?>" class="edit">Sửa</a>
-                        <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này không?');">Xóa</a>
+                        <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này? Hành động này không thể hoàn tác!');">Xóa</a>
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -150,7 +150,7 @@ $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC")->
         </table>
     </div>
 <?php else: 
-    // Create or Edit Form
+    // Form Tạo mới hoặc Chỉnh sửa
     $article = ['title' => '', 'category_id' => '', 'summary' => '', 'content' => '', 'image' => '', 'status' => 'published'];
     if ($action == 'edit' && isset($_GET['id'])) {
         $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
@@ -159,6 +159,23 @@ $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC")->
         if (!$article) redirect('articles.php');
     }
 ?>
+<!-- Nhúng TinyMCE từ CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: 'textarea[name="content"]',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        height: 600,
+        images_upload_url: 'upload_handler.php',
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        branding: false,
+        promotion: false
+      });
+    </script>
+
     <div class="admin-card" style="padding: 2rem;">
         <form method="POST" action="" enctype="multipart/form-data">
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
@@ -174,8 +191,7 @@ $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC")->
                     </div>
                     <div class="form-group">
                         <label>Nội dung</label>
-                        <textarea name="content" class="form-control" rows="15" required><?= htmlspecialchars($article['content']) ?></textarea>
-                        <small style="color: var(--text-muted);">Hỗ trợ thẻ HTML để định dạng.</small>
+                        <textarea name="content" class="form-control" rows="15"><?= htmlspecialchars($article['content']) ?></textarea>
                     </div>
                 </div>
                 

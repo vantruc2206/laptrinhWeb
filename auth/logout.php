@@ -1,10 +1,13 @@
 <?php
 require_once '../includes/functions.php';
 
-// Unset all of the session variables
+// Kiểm tra xem có phải Admin đang đăng xuất không trước khi hủy session
+$wasAdmin = isset($_SESSION['is_admin_login']);
+
+// Xóa tất cả các biến session
 $_SESSION = array();
 
-// Destroy the session cookie
+// Hủy cookie session
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -13,9 +16,13 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destroy the session
+// Hủy session
 session_destroy();
 
-// Redirect to login page
-redirect('login.php');
+// Điều hướng thông minh dựa trên vai trò vừa đăng xuất
+if ($wasAdmin) {
+    redirect('../admin/login.php');
+} else {
+    redirect('../index.php');
+}
 ?>
