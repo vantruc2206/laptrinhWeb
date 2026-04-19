@@ -22,7 +22,7 @@ if (!$article) {
     exit;
 }
 
-// Increment Views (Only for GET requests, not bots, basic implement)
+// Tăng lượt xem (Chỉ cho yêu cầu GET, không phải bot, triển khai cơ bản)
 $pdo->prepare("UPDATE articles SET views = views + 1 WHERE id = ?")->execute([$article['id']]);
 
 $uploadPath = 'assets/images/articles/';
@@ -48,8 +48,8 @@ $uploadPath = 'assets/images/articles/';
     <?php endif; ?>
 
     <div class="article-body">
-        <!-- Render content straight as HTML without escaping because authors write rich text -->
-        <!-- Note: In production, content should be properly sanitized on save and render -->
+        <!-- Render nội dung trực tiếp dưới dạng HTML mà không cần escape vì tác giả viết nội dung dạng rich text -->
+        <!-- Lưu ý: Trong môi trường production, nội dung nên được làm sạch đúng cách khi lưu và hiển thị -->
         <?= $article['content'] ?>
         
         <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #E5E7EB; text-align: center;">

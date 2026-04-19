@@ -42,12 +42,7 @@ a:hover {
 }
 
 /* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -97,8 +92,7 @@ h6 {
   position: relative;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
+.nav-links a:hover, .nav-links a.active {
   color: var(--primary);
 }
 
@@ -113,8 +107,7 @@ h6 {
   transition: var(--transition);
 }
 
-.nav-links a:hover::after,
-.nav-links a.active::after {
+.nav-links a:hover::after, .nav-links a.active::after {
   width: 100%;
 }
 
@@ -182,15 +175,8 @@ h6 {
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .auth-header {
@@ -376,8 +362,7 @@ h6 {
   margin-bottom: 1.5rem;
 }
 
-.article-body h2,
-.article-body h3 {
+.article-body h2, .article-body h3 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
 }
@@ -395,7 +380,6 @@ h6 {
 /* Responsive */
 @media (max-width: 768px) {
   .nav-links {
-    display: none;
-    /* simple mobile handling */
+    display: none; /* simple mobile handling */
   }
 }

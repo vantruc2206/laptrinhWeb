@@ -1,9 +1,9 @@
 <?php
 require_once '../includes/functions.php';
 
-// Ensure user is admin
-if (!isAdmin()) {
-    redirect('../index.php');
+// Bảo vệ khu vực Admin: Yêu cầu quyền admin VÀ phải đăng nhập qua cổng admin
+if (!isAdmin() || !isset($_SESSION['is_admin_login'])) {
+    redirect('login.php');
 }
 ?>
 <!DOCTYPE html>

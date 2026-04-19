@@ -1,74 +1,120 @@
 <?php
 require_once 'includes/header.php';
 
-$slug = $_GET['slug'] ?? '';
-if (!$slug) {
-    redirect('index.php');
+$action = $_GET['action'] ?? 'list';
+$error = '';
+$success = '';
+
+// Handle Delete
+if ($action == 'delete' && isset($_GET['id'])) {
+    $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
+    if ($stmt->execute([$_GET['id']])) {
+        redirect('categories.php?success=deleted');
+    }
 }
 
-// Fetch Category Details
-$stmt = $pdo->prepare("SELECT * FROM categories WHERE slug = ?");
-$stmt->execute([$slug]);
-$category = $stmt->fetch();
+// Handle Form Submission (Create/Edit)
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = sanitize($_POST['name']);
+    $description = sanitize($_POST['description']);
+    $slug = generateSlug($name);
 
-if (!$category) {
-    echo "<div class='container' style='text-align:center; padding: 4rem 0;'><h2>Không tìm thấy danh mục.</h2></div>";
-    require_once 'includes/footer.php';
-    exit;
+    if (empty($name)) {
+        $error = "Category name is required.";
+    } else {
+        if ($action == 'create') {
+            $stmt = $pdo->prepare("INSERT INTO categories (name, slug, description) VALUES (?, ?, ?)");
+            if ($stmt->execute([$name, $slug, $description])) {
+                redirect('categories.php?success=created');
+            } else {
+                $error = "Failed to create category. Name might already exist.";
+            }
+        } elseif ($action == 'edit' && isset($_GET['id'])) {
+            $stmt = $pdo->prepare("UPDATE categories SET name = ?, slug = ?, description = ? WHERE id = ?");
+            if ($stmt->execute([$name, $slug, $description, $_GET['id']])) {
+                redirect('categories.php?success=updated');
+            } else {
+                $error = "Failed to update category.";
+            }
+        }
+    }
 }
 
-// Fetch Articles for this Category
-$stmt = $pdo->prepare("
-    SELECT a.*, u.username as author_name 
-    FROM articles a
-    LEFT JOIN users u ON a.author_id = u.id
-    WHERE a.category_id = ? AND a.status = 'published'
-    ORDER BY a.created_at DESC
-");
-$stmt->execute([$category['id']]);
-$articles = $stmt->fetchAll();
-$uploadPath = 'assets/images/articles/';
+// Handle success messages from redirect
+if (isset($_GET['success'])) {
+    $msgs = ['created' => 'Tạo danh mục thành công.', 'updated' => 'Cập nhật danh mục thành công.', 'deleted' => 'Đã xóa danh mục.'];
+    $success = $msgs[$_GET['success']] ?? '';
+}
 ?>
 
-<div class="container" style="margin-bottom: 2rem;">
-    <h1 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;"><?= htmlspecialchars($category['name']) ?></h1>
-    <?php if ($category['description']): ?>
-        <p style="color: var(--text-muted); font-size: 1.125rem;"><?= nl2br(htmlspecialchars($category['description'])) ?></p>
+<div class="admin-header">
+    <h1>Quản lý Danh mục</h1>
+    <?php if ($action == 'list'): ?>
+        <a href="?action=create" class="btn btn-primary">Thêm Danh mục mới</a>
+    <?php else: ?>
+        <a href="categories.php" class="btn btn-secondary">Quay lại Danh sách</a>
     <?php endif; ?>
-    <hr style="margin-top: 2rem; border: 0; border-top: 1px solid #E5E7EB;">
 </div>
 
-<?php if (empty($articles)): ?>
-    <div class="container" style="text-align:center; padding: 2rem 0;">
-        <p>Chưa có bài viết nào trong danh mục này.</p>
+<?php if ($error): ?><div class="alert alert-danger"><?= $error ?></div><?php endif; ?>
+<?php if ($success): ?><div class="alert alert-success"><?= $success ?></div><?php endif; ?>
+
+<?php if ($action == 'list'): ?>
+    <div class="admin-card table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Đường dẫn</th>
+                    <th>Số bài viết</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $stmt = $pdo->query("
+                    SELECT c.*, (SELECT COUNT(*) FROM articles WHERE category_id = c.id) as count 
+                    FROM categories c ORDER BY c.name ASC
+                ");
+                while ($row = $stmt->fetch()):
+                ?>
+                <tr>
+                    <td><?= $row['id'] ?></td>
+                    <td><?= htmlspecialchars($row['name']) ?></td>
+                    <td><?= htmlspecialchars($row['slug']) ?></td>
+                    <td><span class="badge badge-success"><?= $row['count'] ?></span></td>
+                    <td class="action-links">
+                        <a href="?action=edit&id=<?= $row['id'] ?>" class="edit">Sửa</a>
+                        <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Xác nhận xóa danh mục này? LƯU Ý: Toàn bộ bài viết thuộc danh mục này cũng sẽ bị xóa vĩnh viễn!');">Xóa</a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
     </div>
-<?php else: ?>
-    <div class="articles-grid">
-        <?php foreach ($articles as $art): ?>
-            <article class="article-card">
-                <a href="article.php?slug=<?= htmlspecialchars($art['slug']) ?>" style="display: block;">
-                    <?php if ($art['image']): ?>
-                        <img src="<?= $uploadPath . htmlspecialchars($art['image']) ?>" alt="<?= htmlspecialchars($art['title']) ?>" class="article-img">
-                    <?php else: ?>
-                        <div class="article-img" style="background: #E5E7EB;"></div>
-                    <?php endif; ?>
-                </a>
-                <div class="article-content">
-                    <h3 class="article-title">
-                        <a href="article.php?slug=<?= htmlspecialchars($art['slug']) ?>">
-                            <?= htmlspecialchars($art['title']) ?>
-                        </a>
-                    </h3>
-                    <p class="article-summary">
-                        <?= htmlspecialchars($art['summary']) ?>
-                    </p>
-                    <div class="article-meta">
-                        <span><?= htmlspecialchars($art['author_name']) ?></span>
-                        <span><?= date('d/m/Y', strtotime($art['created_at'])) ?></span>
-                    </div>
-                </div>
-            </article>
-        <?php endforeach; ?>
+<?php else: 
+    // Create or Edit Form
+    $category = ['name' => '', 'description' => ''];
+    if ($action == 'edit' && isset($_GET['id'])) {
+        $stmt = $pdo->prepare("SELECT * FROM categories WHERE id = ?");
+        $stmt->execute([$_GET['id']]);
+        $category = $stmt->fetch();
+        if (!$category) redirect('categories.php');
+    }
+?>
+    <div class="admin-card" style="max-width: 600px; padding: 2rem;">
+        <form method="POST" action="">
+            <div class="form-group">
+                <label>Tên Danh mục</label>
+                <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($category['name']) ?>" required>
+            </div>
+            <div class="form-group">
+                <label>Mô tả</label>
+                <textarea name="description" class="form-control" rows="4"><?= htmlspecialchars($category['description']) ?></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary"><?= $action == 'create' ? 'Tạo Danh mục' : 'Cập nhật Danh mục' ?></button>
+        </form>
     </div>
 <?php endif; ?>
 

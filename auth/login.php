@@ -19,8 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['user_role'] = $user['role'];
-            
-            redirect($user['role'] === 'admin' ? '../admin/index.php' : '../index.php');
+            redirect('../index.php');
         } else {
             $error = "Tên đăng nhập hoặc mật khẩu không hợp lệ.";
         }
@@ -34,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập - Website Tin tức</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="auth-page">
     <div class="auth-container">

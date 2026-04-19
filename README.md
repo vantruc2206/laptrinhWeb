@@ -38,7 +38,6 @@ laptrinhWeb/
 ├── 📄 database.sql               # Script tạo database và dữ liệu mặc định
 ├── 📄 add_sample.php             # Script thêm dữ liệu mẫu (dùng khi setup)
 ├── 📄 reset.php                  # Reset lại dữ liệu database
-├── 📄 test_hash.php              # File test mã hóa password (có thể xóa)
 ├── 📄 update_password.php        # Cập nhật password (tiện ích)
 │
 ├── 📁 auth/                      # Xử lý xác thực người dùng
