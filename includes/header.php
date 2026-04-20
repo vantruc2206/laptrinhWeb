@@ -5,8 +5,6 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 
-// Fetch Categories for Navbar
-$navCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC LIMIT 5")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +12,8 @@ $navCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC LIMIT 5
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NewsDaily - Modern News Portal</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -24,9 +23,31 @@ $navCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC LIMIT 5
         
         <div class="nav-links">
             <a href="index.php">Trang chủ</a>
-            <?php foreach($navCategories as $cat): ?>
+            <?php 
+            // Fetch all categories
+            $allCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
+            $limit = 5;
+            $mainCategories = array_slice($allCategories, 0, $limit);
+            $moreCategories = array_slice($allCategories, $limit);
+            ?>
+
+            <?php foreach($mainCategories as $cat): ?>
                 <a href="category.php?slug=<?= htmlspecialchars($cat['slug']) ?>"><?= htmlspecialchars($cat['name']) ?></a>
             <?php endforeach; ?>
+
+            <?php if(!empty($moreCategories)): ?>
+                <div class="dropdown">
+                    <input type="checkbox" id="nav-dropdown-check" class="dropdown-check">
+                    <label for="nav-dropdown-check" class="dropdown-toggle">
+                        Xem thêm <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                    </label>
+                    <div class="dropdown-menu">
+                        <?php foreach($moreCategories as $cat): ?>
+                            <a href="category.php?slug=<?= htmlspecialchars($cat['slug']) ?>"><?= htmlspecialchars($cat['name']) ?></a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
             
             <?php if(isLoggedIn()): ?>
                 <?php if(isAdmin()): ?>
