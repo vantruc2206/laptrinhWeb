@@ -197,17 +197,15 @@ $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC")->
                 
                 <!-- Sidebar Column -->
                 <div>
-                    <div class="form-group">
-                        <label>Danh mục</label>
-                        <select name="category_id" class="form-control" required>
-                            <option value="">Chọn danh mục...</option>
-                            <?php foreach ($categories as $cat): ?>
-                                <option value="<?= $cat['id'] ?>" <?= $article['category_id'] == $cat['id'] ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($cat['name']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                   <div class="form-group mb-3">
+    <label for="category_id" class="fw-bold mb-2">Danh mục</label>
+    <select name="category_id" id="category_id" class="form-select rounded-pill">
+        <option value="">Chọn danh mục...</option>
+        <?php foreach ($categories as $cat): ?>
+            <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
                     <div class="form-group">
                         <label>Trạng thái</label>
                         <select name="status" class="form-control">

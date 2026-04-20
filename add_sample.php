@@ -5,28 +5,41 @@ require_once __DIR__ . '/includes/functions.php';
 try {
     echo "<h3>Adding Sample Data...</h3>";
 
-    // 1. Get admin ID
+    
     $admin = $pdo->query("SELECT id FROM users WHERE username = 'admin'")->fetch();
     $adminId = $admin ? $admin['id'] : 1;
 
-    // 2. Add some Categories
+    
     $categories = [
-        ['name' => 'Công nghệ', 'slug' => 'cong-nghe', 'desc' => 'Tin tức công nghệ mới nhất'],
-        ['name' => 'Thể thao', 'slug' => 'the-thao', 'desc' => 'Tin tức thể thao trong nước và quốc tế'],
-        ['name' => 'Giải trí', 'slug' => 'giai-tri', 'desc' => 'Thông tin giải trí, showbiz']
-    ];
+    ['name' => 'Công nghệ', 'slug' => 'cong-nghe', 'desc' => 'Tin tức công nghệ mới nhất'],
+    ['name' => 'Thể thao', 'slug' => 'the-thao', 'desc' => 'Tin tức thể thao trong nước và quốc tế'],
+    ['name' => 'Giải trí', 'slug' => 'giai-tri', 'desc' => 'Thông tin giải trí, showbiz'],
+    ['name' => 'Kinh doanh', 'slug' => 'kinh-doanh', 'desc' => 'Tin tức kinh tế và thị trường'],
+    ['name' => 'Sức khỏe', 'slug' => 'suc-khoe', 'desc' => 'Kiến thức y tế và chăm sóc sức khỏe'],
+    ['name' => 'Giáo dục', 'slug' => 'giao-duc', 'desc' => 'Thông tin giáo dục và học tập'],
+    ['name' => 'Đời sống', 'slug' => 'doi-song', 'desc' => 'Tin tức đời sống xã hội'],
+    ['name' => 'Du lịch', 'slug' => 'du-lich', 'desc' => 'Khám phá các điểm đến hấp dẫn'],
+    ['name' => 'Khác', 'slug' => 'khac', 'desc' => 'Các chủ đề khác']
+];
 
-    $catIds = [];
-    foreach ($categories as $cat) {
-        $stmt = $pdo->prepare("INSERT IGNORE INTO categories (name, slug, description) VALUES (?, ?, ?)");
-        $stmt->execute([$cat['name'], $cat['slug'], $cat['desc']]);
-        
-        $catRow = $pdo->query("SELECT id FROM categories WHERE slug = '{$cat['slug']}'")->fetch();
-        $catIds[$cat['slug']] = $catRow['id'];
+$catIds = [];
+$stmt = $pdo->prepare("INSERT IGNORE INTO categories (name, slug, description) VALUES (?, ?, ?)");
+
+foreach ($categories as $cat) {
+   
+    $stmt->execute([$cat['name'], $cat['slug'], $cat['desc']]);
+    
+    $catRow = $pdo->prepare("SELECT id FROM categories WHERE slug = ?");
+    $catRow->execute([$cat['slug']]);
+    $result = $catRow->fetch();
+    
+    if ($result) {
+        $catIds[$cat['slug']] = $result['id'];
     }
-    echo "<p>Categories added!</p>";
+}
+echo "<p>Đã cập nhật " . count($categories) . " danh mục thành công!</p>";
 
-    // 3. Add some Articles
+   
     $articles = [
         [
             'title' => 'Apple ra mắt chip mới siêu mạnh',
