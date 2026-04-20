@@ -128,9 +128,3 @@ Dự án đã được nâng cấp giao diện theo phong cách **Modern Indigo 
 - **Animate.css & CSS Keyframes**: Hiệu ứng chuyển động mượt mà cho các thành phần UI.
 - **Google Fonts (Inter)**: Phông chữ hiện đại, tối ưu cho nội dung tin tức.
 
-**Đặc điểm nổi bật:**
-- **Navigation Thông Minh**: Tự động hiển thị 5 danh mục chính, các danh mục còn lại được gom vào menu "Xem thêm" với hiệu ứng Dropdown chuyên nghiệp (Sử dụng 100% CSS thuần, không phụ thuộc JS).
-- **Dashboard Quản Trị Tối Giản**: Loại bỏ các chỉ số gây nhiễu, tập trung vào dữ liệu cốt lõi giúp quản trị viên dễ dàng theo dõi.
-- **Giao diện Pill Design**: Nút bấm và ô nhập liệu bo tròn hoàn toàn, kết hợp Shadow mềm mại tạo cảm giác cao cấp.
-- **Tối ưu Hiệu Năng**: Loại bỏ hoàn toàn JavaScript dư thừa cho thanh Menu, giúp trang web load nhanh hơn và hoạt động ổn định trên mọi thiết bị.
-
