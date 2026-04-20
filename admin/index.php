@@ -123,10 +123,6 @@ while ($row = $stmt->fetch()) {
                     <div>
                         <p>NGƯỜI DÙNG</p>
                         <h2><?= number_format($userCount) ?></h2>
-                       <p class="growth <?= $growthUsers >= 0 ? 'up' : 'down' ?>">
-    <?= $growthUsers >= 0 ? '↑' : '↓' ?>
-    <?= number_format(abs($growthUsers), 1) ?>%
-</p>
                     </div>
                     <i class="fas fa-users"></i>
                 </div>
@@ -140,12 +136,6 @@ while ($row = $stmt->fetch()) {
                     <p>BÀI VIẾT</p>
                     <h2><?= number_format($articleCount) ?></h2>
 
-                    <?php if (isset($growthArticles)): ?>
-                        <p class="growth <?= $growthArticles >= 0 ? 'up' : 'down' ?>">
-                            <?= $growthArticles >= 0 ? '↑' : '↓' ?>
-                            <?= number_format(abs($growthArticles), 1) ?>%
-                        </p>
-                    <?php endif; ?>
                 </div>
                 <i class="fas fa-file-alt"></i>
             </div>
@@ -228,22 +218,6 @@ while ($row = $stmt->fetch()) {
 .bg-purple { background: #f3e8ff; }
 .bg-orange { background: #fff7ed; }
 
-/* GROWTH */
-.growth {
-    font-size: 13px;
-    margin-top: 6px;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 6px;
-}
-.growth.up {
-    color: #16a34a;
-    background: #dcfce7;
-}
-.growth.down {
-    color: #dc2626;
-    background: #fee2e2;
-}
 
 /* CHART */
 .chart-card {
