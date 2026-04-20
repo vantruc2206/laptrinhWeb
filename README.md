@@ -116,3 +116,20 @@ laptrinhWeb/
 - **Ảnh bài viết** được lưu tại `assets/images/articles/` — database chỉ lưu tên file
 - File `test_hash.php`, `add_sample.php`, `reset.php` chỉ dùng khi dev, nên xóa trước khi deploy
 - Thư mục `.vscode/` là cấu hình VS Code, không ảnh hưởng đến code, có thể xóa
+
+---
+
+## ✨ Giao diện & Thư viện (Mới cập nhật)
+
+Dự án đã được nâng cấp giao diện theo phong cách **Modern Indigo (Pill Design)** với các thư viện sau:
+
+- **Bootstrap 5**: Hệ thống lưới và các thành phần cơ bản.
+- **FontAwesome 6**: Hệ thống biểu tượng (icon) chuyên nghiệp.
+- **Animate.css**: Hiệu ứng chuyển động mượt mà cho các thành phần UI.
+- **Google Fonts (Inter)**: Phông chữ hiện đại, tối ưu cho nội dung tin tức.
+
+**Đặc điểm nổi bật:**
+- Nút bấm và ô nhập liệu kiểu "Pill" (bo tròn hoàn toàn).
+- Hiệu ứng Shadow (đổ bóng) mềm mại, tạo chiều sâu cho giao diện.
+- Trải nghiệm người dùng mượt mà với các hiệu ứng xuất hiện (fade-in, slide-in).
+

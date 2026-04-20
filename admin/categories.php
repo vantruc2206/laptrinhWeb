@@ -106,25 +106,25 @@ if (isset($_GET['success'])) {
 <div class="admin-header d-flex justify-content-between align-items-center mb-4">
     <h1 class="fw-bold m-0">Quản lý Danh mục</h1>
     <?php if ($action == 'list'): ?>
-        <a href="?action=create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+        <a href="?action=create" class="btn btn-primary rounded-pill px-4 shadow-sm animate__animated animate__fadeInRight">
             <i class="fas fa-plus me-2"></i>Thêm Danh mục mới
         </a>
     <?php else: ?>
-        <a href="categories.php" class="btn btn-light border rounded-pill px-4">
+        <a href="categories.php" class="btn btn-light border rounded-pill px-4 animate__animated animate__fadeInLeft">
             <i class="fas fa-arrow-left me-2"></i>Quay lại Danh sách
         </a>
     <?php endif; ?>
 </div>
 
 <?php if ($error): ?>
-    <div class="alert alert-danger border-0 shadow-sm rounded-3"><?= $error ?></div>
+    <div class="alert alert-danger border-0 shadow-sm rounded-4 animate__animated animate__shakeX"><?= $error ?></div>
 <?php endif; ?>
 <?php if ($success): ?>
-    <div class="alert alert-success border-0 shadow-sm rounded-3"><?= $success ?></div>
+    <div class="alert alert-success border-0 shadow-sm rounded-4 animate__animated animate__bounceIn"><?= $success ?></div>
 <?php endif; ?>
 
 <?php if ($action == 'list'): ?>
-    <div class="search-wrapper">
+    <div class="search-wrapper animate__animated animate__fadeInUp">
     <form method="GET" class="search-bar">
         <input type="text" name="search"
             placeholder="Tìm danh mục..."
@@ -135,28 +135,28 @@ if (isset($_GET['success'])) {
         </button>
 
         <?php if(!empty($search)): ?>
-            <a href="categories.php" class="btn-clear">✕</a>
+            <a href="categories.php" class="btn-clear text-muted ms-2">✕</a>
         <?php endif; ?>
     </form>
 </div>
 
-    <div class="admin-card-modern">
+    <div class="admin-card-modern animate__animated animate__fadeInUp">
 
     <!-- HEADER TABLE -->
     <div class="table-header">
-        <h5>Danh sách danh mục</h5>
-        <span><?= $totalResults ?> danh mục</span>
+        <h5 class="fw-bold mb-0">Danh sách danh mục</h5>
+        <span class="badge bg-light text-dark rounded-pill px-3"><?= $totalResults ?> danh mục</span>
     </div>
 
     <div class="table-responsive">
         <table class="table-modern">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th class="ps-4">ID</th>
                     <th>Tên danh mục</th>
                     <th>Slug</th>
                     <th class="text-center">Bài viết</th>
-                    <th class="text-end">Thao tác</th>
+                    <th class="text-end pe-4">Thao tác</th>
                 </tr>
             </thead>
 <tbody>
@@ -174,9 +174,9 @@ if (isset($_GET['success'])) {
         while ($row = $stmt->fetch()):
     ?>
     <tr>
-        <td class="text-muted fw-medium">#<?= $row['id'] ?></td>
+        <td class="ps-4 text-muted fw-medium">#<?= $row['id'] ?></td>
         
-        <td class="fw-semibold"><?= htmlspecialchars($row['name']) ?></td>
+        <td class="fw-bold text-dark"><?= htmlspecialchars($row['name']) ?></td>
         
         <td>
             <span class="slug-badge"><?= htmlspecialchars($row['slug']) ?></span>
@@ -184,22 +184,22 @@ if (isset($_GET['success'])) {
         
        
         <td class="text-center">
-            <span class="badge bg-success text-white px-3 py-2">
+            <span class="badge bg-soft-success text-success px-3 py-2 rounded-pill" style="background: var(--success-soft);">
                 <?= $row['article_count'] ?> bài viết
             </span>
         </td>
         
        
-        <td class="text-end">
+        <td class="text-end pe-4">
             <a href="?action=edit&id=<?= $row['id'] ?>" 
-               class="btn btn-sm btn-outline-success me-3 px-3">
-                <i class="fas fa-pen me-1"></i> Sửa
+               class="btn btn-sm btn-outline-primary border-0 me-2 px-3 fw-bold">
+                Sửa
             </a>
             
             <a href="?action=delete&id=<?= $row['id'] ?>" 
-               class="btn btn-sm btn-danger px-3"
+               class="btn btn-sm btn-danger rounded-3 px-3 shadow-sm"
                onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');">
-                <i class="fas fa-trash me-1"></i> Xóa
+                Xóa
             </a>
         </td>
     </tr>
