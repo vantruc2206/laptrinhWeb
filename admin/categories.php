@@ -257,6 +257,9 @@ if (isset($_GET['success'])) {
         </h2>
         
         <form method="POST" action="">
+            <?php if ($action == 'edit'): ?>
+                <input type="hidden" name="id" value="<?= htmlspecialchars($category['id']) ?>">
+            <?php endif; ?>
             <div class="form-group mb-4">
                 <label class="fw-bold mb-2 text-muted small text-uppercase">Tên Danh mục</label>
                 <input type="text" name="name" class="form-control rounded-pill py-2 px-4 border-light-subtle bg-light" 
