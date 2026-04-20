@@ -282,3 +282,4 @@ if (isset($_GET['success'])) {
         </form>
     </div>
 <?php endif; ?>
+<?php require_once 'includes/footer.php'; ?>
