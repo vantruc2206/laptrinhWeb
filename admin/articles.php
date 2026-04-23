@@ -127,9 +127,6 @@ function buildQuery($overrides = []) {
 }
 ?>
 
-<!-- Nhúng CSS riêng cho trang này -->
-<link rel="stylesheet" href="../assets/css/articles_admin.css">
-
 <!-- ── Page header ────────────────────────────────────────────────────────────── -->
 <div class="admin-header d-flex justify-content-between align-items-center mb-4">
     <h1 class="fw-bold m-0">Quản lý Bài viết</h1>
@@ -154,6 +151,9 @@ function buildQuery($overrides = []) {
 <div class="search-wrapper animate__animated animate__fadeInUp">
     <form method="GET" action="articles.php" class="search-bar">
         <input type="hidden" name="action" value="list">
+        <?php if ($filterCat > 0): ?><input type="hidden" name="category_id" value="<?= $filterCat ?>"><?php endif; ?>
+        <?php if ($filterStatus !== ''): ?><input type="hidden" name="status_filter" value="<?= htmlspecialchars($filterStatus) ?>"><?php endif; ?>
+        
         <input type="text"
                name="search"
                placeholder="Tìm bài viết theo tiêu đề, tóm tắt..."
