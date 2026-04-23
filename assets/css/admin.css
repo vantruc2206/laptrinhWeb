@@ -627,6 +627,370 @@ canvas {
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
+
+
+/* ── Search bar ───────────────────────── */
+.search-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+    box-shadow: 0 1px 6px rgba(99,102,241,0.07);
+    gap: 0.5rem;
+    max-width: 560px;
+}
+
+.search-bar input[type="text"] {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.97rem;
+    color: #374151;
+    flex: 1;
+    min-width: 0;
+}
+
+.search-bar input[type="text"]::placeholder {
+    color: #9ca3af;
+}
+
+.search-bar button[type="submit"] {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: #6366f1;
+    color: #fff;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.18s;
+}
+
+.search-bar button[type="submit"]:hover {
+    background: #4f46e5;
+}
+
+.btn-clear {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 0 0.5rem;
+    transition: color 0.15s;
+}
+.btn-clear:hover { color: #6366f1; }
+
+/* ── Filter dropdowns (danh mục + trạng thái) ────────────── */
+.filter-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-row select {
+    border: 1.5px solid #e5e7eb;
+    border-radius: 999px;
+    background: #fff;
+    padding: 0.4rem 1.1rem;
+    font-size: 0.9rem;
+    color: #374151;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    min-width: 170px;
+}
+
+.filter-row select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+}
+
+.filter-row .btn-filter {
+    border: none;
+    border-radius: 999px;
+    background: #6366f1;
+    color: #fff;
+    padding: 0.42rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background 0.18s;
+}
+.filter-row .btn-filter:hover { background: #4f46e5; }
+
+.filter-row .btn-reset {
+    border: 1.5px solid #e5e7eb;
+    border-radius: 999px;
+    background: #fff;
+    color: #9ca3af;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: border-color 0.15s, color 0.15s;
+}
+.filter-row .btn-reset:hover { border-color: #6366f1; color: #6366f1; }
+
+.result-info {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-left: auto;
+    white-space: nowrap;
+}
+.result-info strong { color: #374151; }
+
+/* ── Table card ──────────────────────────────────────────── */
+.art-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 1px 10px rgba(99,102,241,0.07);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.art-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.art-table-header h5 {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1f2937;
+    margin: 0;
+}
+
+.art-count-badge {
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 999px;
+    padding: 3px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+/* ── Table itself ────────────────────────────────────────── */
+.art-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.art-table thead tr {
+    background: #f9fafb;
+}
+
+.art-table th {
+    padding: 0.8rem 1rem;
+    font-size: 0.73rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ca3af;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+}
+
+.art-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f7f7f7;
+    vertical-align: middle;
+    font-size: 0.92rem;
+    color: #374151;
+}
+
+.art-table tbody tr:last-child td { border-bottom: none; }
+
+.art-table tbody tr {
+    transition: background 0.12s;
+}
+.art-table tbody tr:hover { background: #fafbff; }
+
+/* Thumbnail */
+.art-thumb {
+    width: 62px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+.art-thumb-empty {
+    width: 62px;
+    height: 42px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d1d5db;
+    font-size: 1.1rem;
+}
+
+/* Title cell */
+.art-title {
+    font-weight: 600;
+    color: #1f2937;
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+/* Category badge */
+.cat-badge {
+    display: inline-block;
+    background: #ede9fe;
+    color: #5b21b6;
+    border-radius: 6px;
+    padding: 3px 11px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Status badges */
+.status-published {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 15px;
+}
+.status-draft {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 15px;
+}
+
+/* Action buttons */
+.btn-edit {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: #6366f1;
+    font-weight: 700;
+    font-size: 0.87rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.btn-edit:hover { background: #ede9fe; color: #4f46e5; }
+
+.btn-del {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-weight: 700;
+    font-size: 0.87rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+.btn-del:hover { background: #fecaca; }
+
+/* ── Pagination ──────────────────────────────────────────── */
+.art-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 1.8rem 0 2.5rem;
+    flex-wrap: wrap;
+}
+
+.art-pagination a,
+.art-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    border: 1.5px solid #e5e7eb;
+    background: #fff;
+    color: #374151;
+    font-size: 0.88rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.15s;
+}
+
+.art-pagination a:hover {
+    background: #ede9fe;
+    border-color: #6366f1;
+    color: #6366f1;
+}
+
+.art-pagination a.active {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: #fff;
+    font-weight: 700;
+}
+
+.art-pagination span {
+    color: #9ca3af;
+    cursor: default;
+    border-color: transparent;
+    background: transparent;
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.art-empty {
+    text-align: center;
+    padding: 3.5rem 1rem;
+    color: #9ca3af;
+}
+.art-empty i {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+    opacity: 0.3;
+}
+.art-empty p { font-size: 0.95rem; margin: 0; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .search-bar { max-width: 100%; }
+    .filter-row { flex-direction: column; align-items: stretch; }
+    .filter-row select { min-width: unset; width: 100%; }
+    .result-info { margin-left: 0; }
+    .art-title { max-width: 160px; }
+}
+
 /* ---------------------------------------------------
     ANIMATIONS & HELPERS
 --------------------------------------------------- */
@@ -667,4 +1031,4 @@ canvas {
     max-width: 100%;
   }
 }
-
+
