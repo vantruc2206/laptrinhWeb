@@ -36,23 +36,16 @@ if ($_FILES['file']) {
         exit;
     }
 
-    // Tạo tên tệp duy nhất
     $newName = time() . '_' . uniqid() . '.' . $ext;
     $destination = $uploadDir . $newName;
 
     if (move_uploaded_file($tmpName, $destination)) {
-        // Trả về JSON cho TinyMCE
-        // Đường dẫn nên liên quan đến tên miền hoặc URL tuyệt đối
-        // Trong cấu trúc dự án này, assets nằm ở thư mục gốc.
         $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
         $host = $_SERVER['HTTP_HOST'];
         
-        // Lấy đường dẫn cơ sở của dự án
-        // Nếu URI là /laptrinhWeb/admin/upload_handler.php
-        // Chúng ta muốn /laptrinhWeb/assets/images/articles/name
-        $scriptPath = $_SERVER['SCRIPT_NAME']; // /laptrinhWeb/admin/upload_handler.php
-        $adminPath = dirname($scriptPath);     // /laptrinhWeb/admin
-        $rootPath = dirname($adminPath);       // /laptrinhWeb
+        $scriptPath = $_SERVER['SCRIPT_NAME']; 
+        $adminPath = dirname($scriptPath);     
+        $rootPath = dirname($adminPath);       
         
         $fileUrl = $rootPath . '/assets/images/articles/' . $newName;
         

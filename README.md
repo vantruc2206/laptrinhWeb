@@ -1,25 +1,9 @@
-# 📰 laptrinhWeb - Website Tin Tức PHP
-
-Web ứng dụng tin tức đơn giản xây dựng bằng PHP thuần + MySQL.
-
----
 
 ## ⚙️ Yêu cầu cài đặt
-
 - **XAMPP** (Apache + MySQL)
 - **PHP** >= 7.4
 - **MySQL** >= 5.7
-
 ---
-
-## 🚀 Hướng dẫn cài đặt
-
-1. Copy toàn bộ thư mục `laptrinhWeb` vào `C:\xampp\htdocs\`
-2. Mở **phpMyAdmin** tại `http://localhost/phpmyadmin`
-3. Tạo database mới tên: `news_db`
-4. Import file `database.sql` vào database vừa tạo
-5. Truy cập web tại: `http://localhost/laptrinhWeb`
-
 ### Tài khoản Admin mặc định
 | Username | Password |
 |----------|----------|
@@ -121,10 +105,10 @@ laptrinhWeb/
 
 ## ✨ Giao diện & Thư viện (Mới cập nhật)
 
-Dự án đã được nâng cấp giao diện theo phong cách **Modern Indigo (Pill Design)** với các thư viện sau:
+Dự án đã được nâng cấp giao diện theo phong cách **Modern (Tối giản & Trực quan)** với các công nghệ và thư viện sau:
 
-- **Bootstrap 5**: Hệ thống lưới và các thành phần cơ bản.
+- **Bootstrap 5**: Hệ thống lưới và các thành phần tĩnh cơ bản.
 - **FontAwesome 6**: Hệ thống biểu tượng (icon) chuyên nghiệp.
-- **Animate.css & CSS Keyframes**: Hiệu ứng chuyển động mượt mà cho các thành phần UI.
+- **SweetAlert2**: Thư viện thay thế các hộp thoại Alert/Confirm mặc định cũ bằng các Popup Modal hiện đại, thân thiện.
+- **TinyMCE**: Trình soạn thảo văn bản Rich Text (WYSIWYG) hỗ trợ viết bài viết chi tiết, đính kèm hình ảnh và định dạng HTML.
 - **Google Fonts (Inter)**: Phông chữ hiện đại, tối ưu cho nội dung tin tức.
-

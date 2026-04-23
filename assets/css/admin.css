@@ -23,37 +23,6 @@
   z-index: 1000;
 }
 
-/* ĐƯA CÁC ĐỊNH NGHĨA QUAN TRỌNG LÊN ĐẦU ĐỂ ĐẢM BẢO HIỂN THỊ ĐÚNG */
-.admin-card-modern {
-  background: #fff;
-  border-radius: 24px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
-  overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.02);
-  margin-bottom: 2rem;
-}
-
-.table-modern {
-  width: 100% !important;
-  border-collapse: collapse !important;
-  background: #fff;
-}
-
-.table-modern th {
-  font-size: 13px !important;
-  text-transform: uppercase;
-  color: #94a3b8;
-  padding: 16px 20px !important;
-  text-align: left;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.table-modern td {
-  padding: 18px 20px !important;
-  border-top: 1px solid #f8fafc;
-  vertical-align: middle;
-}
-
 
 /* HEADER */
 .sidebar-header {
@@ -338,38 +307,7 @@ canvas {
   transform: translateY(-1px);
 }
 
-.pagination-container {
-  display: flex;
-  gap: 8px;
-}
 
-.page-square {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  color: #4b5563;
-  text-decoration: none;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.page-square:hover {
-  border-color: #6366f1;
-  color: #6366f1;
-  background: #f9fafb;
-}
-
-.page-square.active {
-  background: #6366f1;
-  color: #fff;
-  border-color: #6366f1;
-  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
-}
 
 .rounded-3 {
   border-radius: 12px !important;

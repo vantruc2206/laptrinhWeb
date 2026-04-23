@@ -10,7 +10,7 @@ if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
 
-// ── Xóa bài viết ──────────────────────────────────────────────────────────────
+// ── Xóa bài viết
 if ($action == 'delete' && isset($_GET['id'])) {
     $stmt = $pdo->prepare("SELECT image FROM articles WHERE id = ?");
     $stmt->execute([$_GET['id']]);
@@ -24,7 +24,7 @@ if ($action == 'delete' && isset($_GET['id'])) {
     }
 }
 
-// ── Xử lý form tạo / sửa ──────────────────────────────────────────────────────
+// ── Xử lý form tạo / sửa
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title       = sanitize($_POST['title']);
     $category_id = $_POST['category_id'];
@@ -74,16 +74,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// ── Thông báo thành công ───────────────────────────────────────────────────────
+// ── Thông báo thành công 
 if (isset($_GET['success'])) {
     $msgs    = ['created' => 'Tạo bài viết thành công.', 'updated' => 'Cập nhật bài viết thành công.', 'deleted' => 'Đã xóa bài viết.'];
     $success = $msgs[$_GET['success']] ?? '';
 }
 
-// ── Danh mục cho dropdown ──────────────────────────────────────────────────────
+// ── Danh mục cho dropdown 
 $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name ASC")->fetchAll();
 
-// ── Search / Filter / Pagination ───────────────────────────────────────────────
+// ── Search / Filter / Pagination
 $limit        = 10;
 $page         = isset($_GET['page'])          ? max(1, (int)$_GET['page'])  : 1;
 $search       = isset($_GET['search'])        ? trim($_GET['search'])        : '';
@@ -127,28 +127,28 @@ function buildQuery($overrides = []) {
 }
 ?>
 
-<!-- ── Page header ────────────────────────────────────────────────────────────── -->
+<!-- Tiêu đề trang -->
 <div class="admin-header d-flex justify-content-between align-items-center mb-4">
     <h1 class="fw-bold m-0">Quản lý Bài viết</h1>
     <?php if ($action == 'list'): ?>
-        <a href="?action=create" class="btn btn-primary rounded-pill px-4 shadow-sm animate__animated animate__fadeInRight">
+        <a href="?action=create" class="btn btn-primary rounded-pill px-4 shadow-sm">
             <i class="fas fa-plus me-2"></i>Viết Bài mới
         </a>
     <?php else: ?>
-        <a href="articles.php" class="btn btn-light border rounded-pill px-4 animate__animated animate__fadeInLeft">
+        <a href="articles.php" class="btn btn-light border rounded-pill px-4">
             <i class="fas fa-arrow-left me-2"></i>Quay lại Danh sách
         </a>
     <?php endif; ?>
 </div>
 
-<!-- Alerts -->
+<!-- Thông báo -->
 <?php if ($error):   ?><div class="alert alert-danger  border-0 shadow-sm rounded-4 animate__animated animate__shakeX"><?= $error   ?></div><?php endif; ?>
 <?php if ($success): ?><div class="alert alert-success border-0 shadow-sm rounded-4 animate__animated animate__bounceIn"><?= $success ?></div><?php endif; ?>
 
 <?php if ($action == 'list'): ?>
 
-<!-- ── Search bar (giống categories) ─────────────────────────────────────────── -->
-<div class="search-wrapper animate__animated animate__fadeInUp">
+<!-- ── Search bar (giống categories) -->
+<div class="search-wrapper">
     <form method="GET" action="articles.php" class="search-bar">
         <input type="hidden" name="action" value="list">
         <?php if ($filterCat > 0): ?><input type="hidden" name="category_id" value="<?= $filterCat ?>"><?php endif; ?>
@@ -165,12 +165,12 @@ function buildQuery($overrides = []) {
     </form>
 </div>
 
-<!-- ── Filter row (danh mục + trạng thái) ────────────────────────────────────── -->
+<!-- ── Filter row (danh mục + trạng thái) -->
 <form method="GET" action="articles.php">
     <input type="hidden" name="action" value="list">
     <?php if ($search !== ''): ?><input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>"><?php endif; ?>
 
-    <div class="filter-row animate__animated animate__fadeInUp">
+    <div class="filter-row">
 
         <!-- Lọc danh mục -->
         <select name="category_id" onchange="this.form.submit()">
@@ -206,8 +206,8 @@ function buildQuery($overrides = []) {
     </div>
 </form>
 
-<!-- ── Table card ─────────────────────────────────────────────────────────────── -->
-<div class="art-card animate__animated animate__fadeInUp">
+<!-- Table card -->
+<div class="art-card">
 
     <div class="art-table-header">
         <h5>Danh sách bài viết</h5>
@@ -296,8 +296,7 @@ function buildQuery($overrides = []) {
                             <i class="fas fa-pen me-1"></i>Sửa
                         </a>
                         <a href="?action=delete&id=<?= $row['id'] ?>&<?= buildQuery() ?>"
-                           class="btn-del ms-1"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa bài viết này? Hành động này không thể hoàn tác!');">
+                           class="btn-del ms-1" data-type="bài viết">
                             <i class="fas fa-trash me-1"></i>Xóa
                         </a>
                     </td>
@@ -308,7 +307,7 @@ function buildQuery($overrides = []) {
     </div>
 </div>
 
-<!-- ── Pagination ─────────────────────────────────────────────────────────────── -->
+<!-- Phân trang -->
 <?php if ($totalPages > 1): ?>
 <nav class="art-pagination">
     <?php if ($page > 1): ?>
@@ -340,7 +339,7 @@ function buildQuery($overrides = []) {
 <?php endif; ?>
 
 <?php else:
-// ── Form tạo mới / chỉnh sửa ──────────────────────────────────────────────────
+// Form tạo mới / chỉnh sửa
 $article = ['title' => '', 'category_id' => '', 'summary' => '', 'content' => '', 'image' => '', 'status' => 'published'];
 if ($action == 'edit' && isset($_GET['id'])) {
     $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = ?");
@@ -350,7 +349,7 @@ if ($action == 'edit' && isset($_GET['id'])) {
 }
 ?>
 
-<!-- TinyMCE -->
+<!-- Trình soạn thảo TinyMCE -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 tinymce.init({
@@ -388,7 +387,7 @@ tinymce.init({
                 </div>
             </div>
 
-            <!-- Sidebar -->
+            <!-- Thanh bên -->
             <div>
                 <div class="form-group mb-3">
                     <label class="fw-bold mb-2">Danh mục</label>

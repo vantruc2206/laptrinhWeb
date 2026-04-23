@@ -103,7 +103,7 @@ if (isset($_GET['success'])) {
                     <td class="action-links">
                         <a href="?action=edit&id=<?= $row['id'] ?>" class="edit">Sửa</a>
                         <?php if ($row['id'] != $_SESSION['user_id']): ?>
-                            <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" onclick="return confirm('Cảnh báo: Bạn có chắc chắn muốn xóa người dùng này vĩnh viễn không?');">Xóa</a>
+                            <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" data-type="người dùng">Xóa</a>
                         <?php endif; ?>
                     </td>
                 </tr>
