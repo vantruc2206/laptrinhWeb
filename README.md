@@ -112,3 +112,39 @@ Dự án đã được nâng cấp giao diện theo phong cách **Modern (Tối 
 - **SweetAlert2**: Thư viện thay thế các hộp thoại Alert/Confirm mặc định cũ bằng các Popup Modal hiện đại, thân thiện.
 - **TinyMCE**: Trình soạn thảo văn bản Rich Text (WYSIWYG) hỗ trợ viết bài viết chi tiết, đính kèm hình ảnh và định dạng HTML.
 - **Google Fonts (Inter)**: Phông chữ hiện đại, tối ưu cho nội dung tin tức.
+
+```mermaid
+erDiagram
+    users {
+        int id PK
+        varchar username UK
+        varchar password
+        varchar email UK
+        enum role
+        timestamp created_at
+    }
+    categories {
+        int id PK
+        varchar name
+        varchar slug UK
+        text description
+        timestamp created_at
+    }
+    articles {
+        int id PK
+        int category_id FK
+        int author_id FK
+        varchar title
+        varchar slug UK
+        text summary
+        longtext content
+        varchar image
+        int views
+        enum status
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    users ||--o{ articles : "viết (author_id)"
+    categories ||--o{ articles : "chứa (category_id)"
+```
