@@ -12,19 +12,24 @@ require_once __DIR__ . '/functions.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NewsDaily - Modern News Portal</title>
-    <link rel="stylesheet" href="assets/css/style.css?v=1.2">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
 <nav class="navbar">
     <div class="container">
-        <a href="index.php" class="navbar-brand">Báo hơi mới</a>
-        
+        <a href="index.php" class="navbar-brand">BÁO HƠI MỚI</a>
+
+        <form action="search.php" method="GET" class="search-bar">
+            <input type="text" name="search" placeholder="Tìm kiếm tin tức..." required>
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+
         <div class="nav-links">
             <a href="index.php">Trang chủ</a>
             <?php 
-            // Fetch all categories
+            // Fetch and separate categories
             $allCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
             $limit = 5;
             $mainCategories = array_slice($allCategories, 0, $limit);

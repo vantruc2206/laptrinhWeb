@@ -6,11 +6,14 @@ isLoggedIn() && redirect('../index.php');
 $error = '';
 $success = '';
 
+$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : '../index.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = sanitize($_POST['username']);
     $email = sanitize($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
+    $redirect = $_POST['redirect'] ?? '../index.php';
 
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "Vui lòng điền đầy đủ các trường.";
@@ -26,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'user')");
             if ($stmt->execute([$username, $email, $hashed_password])) {
-                $success = "Đăng ký thành công! Bạn hiện có thể <a href='login.php'>đăng nhập</a>.";
+                $success = "Đăng ký thành công! Bạn hiện có thể <a href='login.php?redirect=" . urlencode($redirect) . "'>đăng nhập</a>.";
             } else {
                 $error = "Đã có lỗi xảy ra. Vui lòng thử lại.";
             }
@@ -57,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="alert alert-success"><?= $success ?></div>
             <?php else: ?>
                 <form method="POST" action="">
+                    <input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
                     <div class="form-group">
                         <label>Tên đăng nhập</label>
                         <input type="text" name="username" class="form-control" required>
@@ -77,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </form>
             <?php endif; ?>
             <div class="auth-footer">
-                <p>Đã có tài khoản? <a href="login.php">Đăng nhập</a></p>
+                <p>Đã có tài khoản? <a href="login.php?redirect=<?= urlencode($redirect) ?>">Đăng nhập</a></p>
                 <p><a href="../index.php">Quay lại Trang chủ</a></p>
             </div>
         </div>
