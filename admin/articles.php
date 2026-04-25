@@ -189,10 +189,7 @@ function buildQuery($overrides = []) {
             <option value="draft"     <?= $filterStatus === 'draft'     ? 'selected' : '' ?>> Bản nháp</option>
         </select>
 
-        <!-- Nút lọc (dự phòng nếu JS tắt) -->
-        <button type="submit" class="btn-filter">
-            <i class="fas fa-filter"></i> Lọc
-        </button>
+
 
         <!-- Xóa bộ lọc -->
         <?php if ($filterCat > 0 || $filterStatus !== '' || $search !== ''): ?>
