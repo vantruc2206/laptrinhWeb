@@ -354,6 +354,12 @@
   width: 100%;
   max-width: 448px;
   margin-left: -3px;
+  transition: none !important;
+}
+
+.search-bar:focus-within {
+  box-shadow: 0 1px 6px rgba(99, 102, 241, 0.07) !important;
+  border-color: #e5e7eb !important;
 }
 
 .search-bar input[type="text"] {
