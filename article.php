@@ -24,6 +24,31 @@ if (!$article) {
 
 $pdo->prepare("UPDATE articles SET views = views + 1 WHERE id = ?")->execute([$article['id']]);
 
+// Xử lý Sửa / Xóa bình luận
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
+    if (isLoggedIn()) {
+        $comment_id = (int)($_POST['comment_id'] ?? 0);
+        $user_id = $_SESSION['user_id'];
+        
+        if ($_POST['action'] == 'delete_comment') {
+            $pdo->prepare("DELETE FROM comments WHERE id = ? AND user_id = ?")->execute([$comment_id, $user_id]);
+            redirect("article.php?slug=" . urlencode($slug) . "&success=deleted");
+        } elseif ($_POST['action'] == 'update_comment') {
+            $new_content = sanitize($_POST['content'] ?? '');
+            if (!empty($new_content)) {
+                $pdo->prepare("UPDATE comments SET content = ? WHERE id = ? AND user_id = ?")->execute([$new_content, $comment_id, $user_id]);
+                redirect("article.php?slug=" . urlencode($slug) . "&success=updated");
+            }
+        }
+    }
+}
+
+// Xử lý thông báo
+if (isset($_GET['success'])) {
+    if ($_GET['success'] == 'deleted') $commentSuccess = "Đã xóa bình luận thành công.";
+    if ($_GET['success'] == 'updated') $commentSuccess = "Đã cập nhật bình luận thành công.";
+}
+
 // Xử lý gửi bình luận
 $commentSuccess = "";
 $commentError = "";
@@ -126,9 +151,30 @@ $uploadPath = 'assets/images/articles/';
                             <div class="comment-details">
                                 <div class="comment-author"><?= htmlspecialchars($comment['username']) ?></div>
                                 <div class="comment-date"><?= date('d/m/Y H:i', strtotime($comment['created_at'])) ?></div>
-                                <div class="comment-text">
+                                <div class="comment-text" id="comment-text-<?= $comment['id'] ?>">
                                     <?= nl2br(htmlspecialchars($comment['content'])) ?>
                                 </div>
+                                <?php if (isLoggedIn() && $_SESSION['user_id'] == $comment['user_id']): ?>
+                                    <div style="margin-top: 10px; font-size: 0.9rem;">
+                                        <button onclick="toggleEdit(<?= $comment['id'] ?>)" style="background: none; border: none; color: var(--primary); cursor: pointer; padding: 0;"><i class="fas fa-pen"></i> Sửa</button>
+                                        <span style="color: #ccc; margin: 0 5px;">|</span>
+                                        <form method="POST" action="" id="delete-form-<?= $comment['id'] ?>" style="display: inline;">
+                                            <input type="hidden" name="action" value="delete_comment">
+                                            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                                            <button type="button" onclick="confirmDelete(<?= $comment['id'] ?>)" style="background: none; border: none; color: red; cursor: pointer; padding: 0;"><i class="fas fa-trash"></i> Xóa</button>
+                                        </form>
+                                    </div>
+                                    <!-- Edit Form -->
+                                    <form method="POST" action="" id="edit-form-<?= $comment['id'] ?>" style="display: none; margin-top: 10px;">
+                                        <input type="hidden" name="action" value="update_comment">
+                                        <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                                        <textarea name="content" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; margin-bottom: 8px; font-family: inherit; font-size: 0.95rem; resize: vertical;" required><?= htmlspecialchars($comment['content']) ?></textarea>
+                                        <div>
+                                            <button type="submit" class="btn btn-primary" style="padding: 6px 16px; font-size: 0.85rem;">Lưu thay đổi</button>
+                                            <button type="button" class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;" onclick="toggleEdit(<?= $comment['id'] ?>)">Hủy</button>
+                                        </div>
+                                    </form>
+                                <?php endif; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -140,5 +186,41 @@ $uploadPath = 'assets/images/articles/';
             <a href="index.php" class="btn btn-secondary">&larr; Quay lại Tin tức</a>
         </div>
 </article>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+function toggleEdit(id) {
+    var form = document.getElementById('edit-form-' + id);
+    var text = document.getElementById('comment-text-' + id);
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        text.style.display = 'none';
+    } else {
+        form.style.display = 'none';
+        text.style.display = 'block';
+    }
+}
+
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Bạn có chắc chắn?',
+        text: "Bình luận này sẽ bị xóa vĩnh viễn và không thể khôi phục!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#94a3b8',
+        confirmButtonText: '<i class="fas fa-trash"></i> Vâng, Xóa nó!',
+        cancelButtonText: 'Hủy thao tác',
+        reverseButtons: true,
+        customClass: {
+            popup: 'rounded-4 shadow-lg'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    })
+}
+</script>
 
 <?php require_once 'includes/footer.php'; ?>
