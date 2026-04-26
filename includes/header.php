@@ -21,15 +21,20 @@ require_once __DIR__ . '/functions.php';
     <div class="container">
         <a href="index.php" class="navbar-brand">BÁO HƠI MỚI</a>
 
+        <button class="mobile-menu-btn" onclick="document.getElementById('navMenu').classList.toggle('active')">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <form action="search.php" method="GET" class="search-bar">
             <input type="text" name="search" placeholder="Tìm kiếm tin tức..." required>
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
 
-        <div class="nav-links">
+        <div class="nav-links" id="navMenu">
             <a href="index.php">Trang chủ</a>
             <?php 
             // Fetch and separate categories
+            global $pdo;
             $allCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
             $limit = 5;
             $mainCategories = array_slice($allCategories, 0, $limit);
@@ -57,9 +62,8 @@ require_once __DIR__ . '/functions.php';
             <?php if(isLoggedIn()): ?>
                 <?php if(isAdmin()): ?>
                     <a href="admin/index.php" style="color: var(--primary);">Trang quản trị</a>
-                <?php else: ?>
-                    <a href="auth/logout.php" class="btn btn-secondary" style="padding: 0.25rem 0.75rem;">Đăng xuất</a>
                 <?php endif; ?>
+                <a href="auth/logout.php" class="btn btn-secondary" style="padding: 0.25rem 0.75rem;">Đăng xuất</a>
             <?php else: ?>
                 <a href="auth/login.php" class="btn btn-primary" style="padding: 0.25rem 0.75rem; color: #fff;">Đăng nhập</a>
             <?php endif; ?>

@@ -6,6 +6,7 @@ define('DB_PASS', '');
 define('DB_NAME', 'news_db');
 
 // Establish Database Connection
+global $pdo;
 try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
     $options = [

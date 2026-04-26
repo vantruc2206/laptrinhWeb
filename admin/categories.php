@@ -23,7 +23,6 @@ $totalStmt->execute($params);
 $totalResults = $totalStmt->fetchColumn();
 $totalPages = ceil($totalResults / $limit);
 
-// Handle Delete
 if ($action == 'delete' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
     
@@ -50,7 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($name)) {
         $error = "Tên danh mục không được để trống!";
     } else {
-        $slug = generateSlug($name);
+        $checkParams = ($action == 'edit' && $id) ? [$name, $id] : [$name];
+        $checkQuery = "SELECT id FROM categories WHERE name = ?" . (($action == 'edit' && $id) ? " AND id != ?" : "");
+        $stmtCheck = $pdo->prepare($checkQuery);
+        $stmtCheck->execute($checkParams);
+
+        if ($stmtCheck->rowCount() > 0) {
+            $error = "Tên danh mục '$name' đã tồn tại! Vui lòng chọn tên khác.";
+        } else {
+            $slug = generateSlug($name);
 
         
         if ($action == 'create') {
@@ -93,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $error = "Không thể cập nhật danh mục.";
             }
+        }
         }
     }
 }

@@ -109,6 +109,15 @@ while ($row = $stmt->fetch()) {
     $categoryLabels[] = $row['name'];
     $categoryCounts[] = (int)$row['total'];
 }
+
+$topArticlesStmt = $pdo->query("
+    SELECT a.title, a.views, c.name as category_name, a.slug
+    FROM articles a
+    LEFT JOIN categories c ON a.category_id = c.id
+    ORDER BY a.views DESC
+    LIMIT 5
+");
+$topArticles = $topArticlesStmt->fetchAll();
 ?>
 
 <div class="dashboard-content">
@@ -158,26 +167,50 @@ while ($row = $stmt->fetch()) {
 </div>
 
 
-<!-- ===== CHART ===== -->
-<div class="chart-card">
-
-    <div class="chart-header">
-        <h3>Thống kê</h3>
-
-        <div class="chart-tabs">
-            <button class="tab active" onclick="switchChart('week', this)">7 ngày</button>
-            <button class="tab" onclick="switchChart('month', this)">1 tháng</button>
+<!-- ===== CHARTS GRID ===== -->
+<div class="dashboard-grid">
+    <div class="chart-card main-chart-wrapper">
+        <div class="chart-header">
+            <h3>Thống kê tăng trưởng</h3>
+            <div class="chart-tabs">
+                <button class="tab active" onclick="switchChart('week', this)">7 ngày</button>
+                <button class="tab" onclick="switchChart('month', this)">1 tháng</button>
+            </div>
+        </div>
+        <div class="canvas-container">
+            <canvas id="mainChart"></canvas>
         </div>
     </div>
 
-    <canvas id="mainChart"></canvas>
-    <div class="chart-card">
-    <div class="chart-header">
-        <h3>Phân bố bài viết theo danh mục</h3>
+    <div class="chart-card donut-chart-wrapper">
+        <div class="chart-header">
+            <h3>Phân bố danh mục</h3>
+        </div>
+        <div class="canvas-container">
+            <canvas id="categoryChart"></canvas>
+        </div>
     </div>
-    <canvas id="categoryChart"></canvas>
 </div>
 
+<!-- ===== TOP ARTICLES ===== -->
+<div class="chart-card mt-4">
+    <div class="chart-header" style="border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 12px;">
+        <h3><i class="fas fa-fire" style="color: #ef4444; margin-right: 8px;"></i>Top 5 Bài viết đọc nhiều nhất</h3>
+    </div>
+    <div class="top-articles-list">
+        <?php foreach($topArticles as $index => $article): ?>
+            <div class="top-article-item">
+                <div class="top-rank rank-<?= $index + 1 ?>"><?= $index + 1 ?></div>
+                <div class="top-info">
+                    <a href="../article.php?slug=<?= htmlspecialchars($article['slug']) ?>" target="_blank" class="top-title"><?= htmlspecialchars($article['title']) ?></a>
+                    <span class="top-category"><?= htmlspecialchars($article['category_name']) ?></span>
+                </div>
+                <div class="top-views">
+                    <i class="fas fa-eye"></i> <?= number_format($article['views']) ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>
 
 
@@ -220,12 +253,91 @@ while ($row = $stmt->fetch()) {
 
 
 /* CHART */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
 .chart-card {
     background: #fff;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas-container {
+    flex-grow: 1;
+    position: relative;
+    min-height: 280px;
+}
+
+.mt-4 { margin-top: 20px; }
+
+/* TOP ARTICLES */
+.top-articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.top-article-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8fafc;
+    transition: 0.2s;
+}
+.top-article-item:hover {
+    background: #f1f5f9;
+    transform: translateX(4px);
+}
+.top-rank {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+.rank-1 { background: #fee2e2; color: #ef4444; }
+.rank-2 { background: #ffedd5; color: #f97316; }
+.rank-3 { background: #fef3c7; color: #eab308; }
+.top-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+.top-title {
+    display: block;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+}
+.top-title:hover { color: #6366f1; }
+.top-category {
+    font-size: 12px;
+    padding: 2px 8px;
+    background: #e0f2fe;
+    color: #0ea5e9;
+    border-radius: 12px;
+    font-weight: 500;
+}
+.top-views {
+    font-weight: bold;
+    color: #64748b;
+    white-space: nowrap;
+    margin-left: 15px;
 }
 
 .chart-header {
@@ -262,6 +374,9 @@ while ($row = $stmt->fetch()) {
 }
 
 /* responsive */
+@media (max-width: 992px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 768px) {
     .dashboard-cards { flex-direction: column; }
 }

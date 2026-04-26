@@ -5,7 +5,14 @@ $action = $_GET['action'] ?? 'list';
 $error = '';
 $success = '';
 
-// Xử lý Xóa
+$limit = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+$start = ($page - 1) * $limit;
+
+$totalUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+$totalPages = max(1, ceil($totalUsers / $limit));
+
 if ($action == 'delete' && isset($_GET['id']) && $_GET['id'] != $_SESSION['user_id']) {
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     if ($stmt->execute([$_GET['id']])) {
@@ -13,7 +20,6 @@ if ($action == 'delete' && isset($_GET['id']) && $_GET['id'] != $_SESSION['user_
     }
 }
 
-// Xử lý Form (Tạo mới/Chỉnh sửa)
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = sanitize($_POST['username']);
     $email = sanitize($_POST['email']);
@@ -53,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Xử lý thông báo thành công
 if (isset($_GET['success'])) {
     $msgs = ['created' => 'Tạo người dùng thành công.', 'updated' => 'Cập nhật người dùng thành công.', 'deleted' => 'Đã xóa người dùng.'];
     $success = $msgs[$_GET['success']] ?? '';
@@ -63,7 +68,7 @@ if (isset($_GET['success'])) {
 <div class="admin-header">
     <h1>Quản lý Người dùng</h1>
     <?php if ($action == 'list'): ?>
-        <a href="?action=create" class="btn btn-primary">Thêm Người dùng mới</a>
+        <a href="?action=create" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm Người dùng mới</a>
     <?php else: ?>
         <a href="users.php" class="btn btn-secondary">Quay lại Danh sách</a>
     <?php endif; ?>
@@ -87,7 +92,10 @@ if (isset($_GET['success'])) {
             </thead>
             <tbody>
                 <?php
-                $stmt = $pdo->query("SELECT * FROM users ORDER BY created_at DESC");
+                $stmt = $pdo->prepare("SELECT * FROM users ORDER BY created_at DESC LIMIT :start, :limit");
+                $stmt->bindValue(':start', $start, PDO::PARAM_INT);
+                $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+                $stmt->execute();
                 while ($row = $stmt->fetch()):
                 ?>
                 <tr>
@@ -96,14 +104,14 @@ if (isset($_GET['success'])) {
                     <td><?= htmlspecialchars($row['email']) ?></td>
                     <td>
                         <span class="badge <?= $row['role'] == 'admin' ? 'badge-success' : 'badge-warning' ?>">
-                            <?= $row['role'] == 'admin' ? 'Quản trị viên' : 'Người dùng thường' ?>
+                            <?= $row['role'] == 'admin' ? 'Quản trị viên' : 'Người dùng' ?>
                         </span>
                     </td>
                     <td><?= date('d/m/Y', strtotime($row['created_at'])) ?></td>
                     <td class="action-links">
-                        <a href="?action=edit&id=<?= $row['id'] ?>" class="edit">Sửa</a>
+                        <a href="?action=edit&id=<?= $row['id'] ?>" class="btn-edit"><i class="fas fa-pen me-1"></i>Sửa</a>
                         <?php if ($row['id'] != $_SESSION['user_id']): ?>
-                            <a href="?action=delete&id=<?= $row['id'] ?>" class="delete" data-type="người dùng">Xóa</a>
+                            <a href="?action=delete&id=<?= $row['id'] ?>" class="btn-del ms-1" data-type="người dùng"><i class="fas fa-trash me-1"></i>Xóa</a>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -111,6 +119,28 @@ if (isset($_GET['success'])) {
             </tbody>
         </table>
     </div>
+
+    <?php if ($totalPages > 1): ?>
+    <nav class="art-pagination">
+        <?php if ($page > 1): ?>
+            <a href="?page=<?= $page-1 ?>">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        <?php endif; ?>
+
+        <?php for($i = 1; $i <= $totalPages; $i++): ?>
+            <a class="<?= ($page == $i) ? 'active' : '' ?>" href="?page=<?= $i ?>">
+                <?= $i ?>
+            </a>
+        <?php endfor; ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a href="?page=<?= $page+1 ?>">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        <?php endif; ?>
+    </nav>
+    <?php endif; ?>
 <?php else: 
     // Form Tạo mới hoặc Chỉnh sửa
     $user = ['username' => '', 'email' => '', 'role' => 'user'];
@@ -134,7 +164,7 @@ if (isset($_GET['success'])) {
             <div class="form-group">
                 <label>Vai trò</label>
                 <select name="role" class="form-control">
-                    <option value="user" <?= $user['role'] == 'user' ? 'selected' : '' ?>>Người dùng thường</option>
+                    <option value="user" <?= $user['role'] == 'user' ? 'selected' : '' ?>>Người dùng</option>
                     <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Quản trị viên</option>
                 </select>
             </div>
