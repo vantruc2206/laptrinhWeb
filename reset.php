@@ -10,12 +10,12 @@ try {
     if ($stmt->rowCount() > 0) {
         echo "<p style='color:green'>Success! The password for 'admin' has been reset to: <b>admin123</b></p>";
     } else {
-        // Check if user exists
+        // Kiểm tra xem tài khoản có tồn tại không
         $check = $pdo->query("SELECT * FROM users WHERE username = 'admin'")->fetch();
         if ($check) {
             echo "<p style='color:green'>Success! The password was already up to date for 'admin'. Password is: <b>admin123</b></p>";
         } else {
-            // Recreate admin if missing
+            // Tạo lại tài khoản admin nếu bị thiếu
             $stmt = $pdo->prepare("INSERT INTO users (username, password, email, role) VALUES ('admin', :hash, 'admin@example.com', 'admin')");
             $stmt->execute(['hash' => $new_hash]);
             echo "<p style='color:green'>Admin user was missing, recreated successfully! Password is: <b>admin123</b></p>";

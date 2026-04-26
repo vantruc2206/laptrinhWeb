@@ -6,7 +6,7 @@ if (!$slug) {
     redirect('index.php');
 }
 
-// Fetch Category Details
+// Lấy thông tin danh mục
 $stmt = $pdo->prepare("SELECT * FROM categories WHERE slug = ?");
 $stmt->execute([$slug]);
 $category = $stmt->fetch();
@@ -17,7 +17,7 @@ if (!$category) {
     exit;
 }
 
-// Fetch Articles for this Category
+// Lấy danh sách bài viết thuộc danh mục này
 $stmt = $pdo->prepare("
     SELECT a.*, u.username as author_name 
     FROM articles a

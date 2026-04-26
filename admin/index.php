@@ -429,7 +429,7 @@ function renderChart(type) {
         gradientPink.addColorStop(1, "rgba(251, 207, 232, 0)");
 
 
-// ===== LINE / BAR CHART =====
+// ===== BIỂU ĐỒ ĐƯỜNG / CỘT =====
 if (type === 'week') {
     chart = new Chart(ctx, {
         type: 'line',
@@ -487,7 +487,7 @@ if (type === 'week') {
 }
 
 
-// ===== PIE / DOUGHNUT CHART =====
+// ===== BIỂU ĐỒ TRÒN =====
 const categoryLabels = <?= json_encode($categoryLabels) ?>;
 const categoryData = <?= json_encode($categoryCounts) ?>;
 

@@ -9,7 +9,7 @@ if (empty($query)) {
     exit;
 }
 
-// Split query into individual words for more flexible search
+// Tách từ khóa để tìm kiếm linh hoạt hơn
 $words = array_filter(array_map('trim', explode(' ', $query)));
 $whereParts = [];
 $params = [];
@@ -23,7 +23,7 @@ foreach ($words as $i => $word) {
 
 $whereSql = count($whereParts) > 0 ? "AND " . implode(" AND ", $whereParts) : "";
 
-// Fetch Articles matching search query
+// Lấy các bài viết phù hợp với từ khóa tìm kiếm
 $sql = "
     SELECT a.*, c.name as category_name, c.slug as category_slug, u.username as author_name
     FROM articles a

@@ -1,9 +1,7 @@
 /* Admin Dashboard Specific Styles */
 @import url('style.css');
 
-/* ---------------------------------------------------
-    BASE LAYOUT
---------------------------------------------------- */
+/* Bố cục chung */
 .admin-layout {
   display: flex;
   min-height: 100vh;
@@ -52,9 +50,7 @@
   gap: 1rem;
 }
 
-/* ---------------------------------------------------
-    SIDEBAR NAVIGATION
---------------------------------------------------- */
+/* Menu bên trái */
 .sidebar-header {
   padding: 1.5rem;
   border-bottom: 1px solid #dbeafe;
@@ -105,9 +101,7 @@
   border-radius: 4px;
 }
 
-/* ---------------------------------------------------
-    CARDS & TABLES (LEGACY/GENERIC)
---------------------------------------------------- */
+/* Bảng và Thẻ */
 .admin-card {
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -157,9 +151,7 @@
   background-color: #F9FAFB;
 }
 
-/* ---------------------------------------------------
-    MODERN TABLE COMPONENTS (ARTICLES/CATEGORIES)
---------------------------------------------------- */
+/* Bảng dữ liệu hiện đại */
 .art-card {
   background: #fff;
   border-radius: 18px;
@@ -254,9 +246,7 @@
   display: block;
 }
 
-/* ---------------------------------------------------
-    STAT CARDS & DASHBOARD
---------------------------------------------------- */
+/* Thẻ thống kê */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -335,9 +325,7 @@
   color: #f97316 !important;
 }
 
-/* ---------------------------------------------------
-    SEARCH & FILTER
---------------------------------------------------- */
+/* Tìm kiếm và Lọc */
 .search-wrapper {
   margin-bottom: 1.5rem;
 }
@@ -418,9 +406,7 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
-/* ---------------------------------------------------
-    BADGES & UTILITIES
---------------------------------------------------- */
+/* Nhãn và Tiện ích */
 .cat-badge {
   display: inline-block;
   background: #ede9fe;
@@ -484,9 +470,7 @@
   background: #fecaca;
 }
 
-/* ---------------------------------------------------
-    RESPONSIVE MOBILE (CONSOLIDATED)
---------------------------------------------------- */
+/* Giao diện di động */
 .mobile-sidebar-toggle {
   display: none;
   background: none;
@@ -545,9 +529,7 @@
   }
 }
 
-/* ---------------------------------------------------
-    ANIMATIONS & HELPERS
---------------------------------------------------- */
+/* Hiệu ứng và Trợ giúp */
 .animate__animated {
   --animate-duration: 0.6s;
 }
@@ -594,7 +576,7 @@
   color: #d97706;
 }
 
-/* PAGINATION */
+/* Phân trang */
 .art-pagination {
     display: flex;
     justify-content: center;

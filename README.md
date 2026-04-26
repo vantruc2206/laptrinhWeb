@@ -98,17 +98,23 @@ laptrinhWeb/
 ## 📌 Lưu ý quan trọng
 
 - **Ảnh bài viết** được lưu tại `assets/images/articles/` — database chỉ lưu tên file
-- File `test_hash.php`, `add_sample.php`, `reset.php` chỉ dùng khi dev, nên xóa trước khi deploy
-- Thư mục `.vscode/` là cấu hình VS Code, không ảnh hưởng đến code, có thể xóa
-
 ---
 
-## ✨ Giao diện & Thư viện (Mới cập nhật)
+## ✨ Giao diện, Thư viện & API Tích hợp
 
-Dự án đã được nâng cấp giao diện theo phong cách **Modern (Tối giản & Trực quan)** với các công nghệ và thư viện sau:
+Dự án sử dụng các công nghệ, thư viện CDN và Public APIs sau để tối ưu hóa trải nghiệm người dùng:
 
-- **Bootstrap 5**: Hệ thống lưới và các thành phần tĩnh cơ bản.
-- **FontAwesome 6**: Hệ thống biểu tượng (icon) chuyên nghiệp.
-- **SweetAlert2**: Thư viện thay thế các hộp thoại Alert/Confirm mặc định cũ bằng các Popup Modal hiện đại, thân thiện.
-- **TinyMCE**: Trình soạn thảo văn bản Rich Text (WYSIWYG) hỗ trợ viết bài viết chi tiết, đính kèm hình ảnh và định dạng HTML.
+### 1. Thư viện Giao diện & Tiện ích
+- **Bootstrap 5.3.0**: Hệ thống lưới và các thành phần tĩnh cơ bản cho khu vực Admin.
+- **FontAwesome 6.0 & 6.4**: Hệ thống biểu tượng (icon) chuyên nghiệp dùng trên toàn trang.
+- **SweetAlert2 11**: Thay thế các hộp thoại Alert/Confirm mặc định bằng các Popup Modal hiện đại.
+- **TinyMCE 6.8.2**: Trình soạn thảo văn bản Rich Text (WYSIWYG) hỗ trợ viết bài viết chi tiết, đính kèm hình ảnh và định dạng HTML.
+- **Chart.js**: Vẽ biểu đồ thống kê trực quan (Line, Bar, Pie) trên Admin Dashboard.
+- **Animate.css 4.1.1**: Thư viện hiệu ứng chuyển động cho các thành phần UI ở trang Admin.
 - **Google Fonts (Inter)**: Phông chữ hiện đại, tối ưu cho nội dung tin tức.
+
+### 2. Dữ liệu APIs
+Dự án tích hợp module thời tiết thời gian thực ở thanh điều hướng sử dụng các Public APIs hoàn toàn miễn phí:
+- **Open API Tỉnh/Thành Việt Nam** (`provinces.open-api.vn/api/v2/`): Lấy danh sách 34 tỉnh/thành phố tại Việt Nam cho dropdown địa điểm.
+- **OpenStreetMap Nominatim API** (`nominatim.openstreetmap.org`): Chuyển đổi tên tỉnh thành sang tọa độ (Geocoding) chuẩn xác.
+- **Open-Meteo API** (`api.open-meteo.com`): Truy xuất dữ liệu thời tiết (Nhiệt độ hiện tại, trạng thái thời tiết chuẩn WMO) qua hệ tọa độ.

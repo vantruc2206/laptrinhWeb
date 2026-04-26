@@ -9,18 +9,18 @@
 </footer>
 
 <script>
-// API Config
+// Cấu hình API
 const PROVINCE_API = 'https://provinces.open-api.vn/api/v2/';
 const GEO_API = 'https://nominatim.openstreetmap.org/search'; 
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
 
-// Helper to clean city names
+// Hàm làm sạch tên thành phố
 function cleanCityName(name) {
     if (!name) return "";
     return name.replace(/^(Thành phố trực thuộc Trung ương|Thành phố|Tỉnh)\s+/i, '').trim();
 }
 
-// Fetch and render 34 provinces
+// Lấy và hiển thị danh sách tỉnh thành
 async function loadProvinces() {
     const listContainer = document.getElementById('full-city-list');
     if (!listContainer) return;
@@ -46,8 +46,7 @@ async function loadProvinces() {
     }
 }
 
-// Get coordinates (Nominatim) then weather
-// Get coordinates (Nominatim) then weather
+// Lấy tọa độ và thông tin thời tiết
 async function getWeatherByCityName(fullName) {
     const cityDisplay = document.querySelector('.weather-widget .city');
     const tempDisplay = document.querySelector('.weather-widget .temp');
@@ -101,7 +100,7 @@ async function getWeatherByCityName(fullName) {
     }
 }
 
-// Search Filter
+// Bộ lọc tìm kiếm
 document.getElementById('city-search-input')?.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase().trim();
     document.querySelectorAll('.city-item').forEach(item => {
@@ -110,13 +109,13 @@ document.getElementById('city-search-input')?.addEventListener('input', (e) => {
     });
 });
 
-// Initialize
+// Khởi tạo khi tải trang
 window.addEventListener('DOMContentLoaded', () => {
     loadProvinces();
     const saved = localStorage.getItem('selected_city_fullName') || 'Thành phố Hồ Chí Minh';
     getWeatherByCityName(saved);
 
-    // Smart Sticky Header: Hide top bar on scroll down, show on scroll up
+    // Header dính thông minh: Ẩn thanh trên khi cuộn xuống, hiện khi cuộn lên
     let lastScroll = 0;
     const navbar = document.querySelector('.navbar');
     const navbarTop = document.querySelector('.navbar-top');
@@ -128,10 +127,10 @@ window.addEventListener('DOMContentLoaded', () => {
             
             if (currentScroll > topHeight + 50) {
                 if (currentScroll > lastScroll) {
-                    // Scroll down
+                    // Cuộn xuống
                     navbar.style.transform = `translateY(-${topHeight}px)`;
                 } else {
-                    // Scroll up
+                    // Cuộn lên
                     navbar.style.transform = 'translateY(0)';
                 }
             } else {

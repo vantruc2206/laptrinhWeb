@@ -45,9 +45,7 @@ a:hover {
   color: var(--primary-hover);
 }
 
-/* ---------------------------------------------------
-    TYPOGRAPHY
---------------------------------------------------- */
+/* Kiểu chữ */
 h1,
 h2,
 h3,
@@ -60,9 +58,7 @@ h6 {
   color: var(--dark);
 }
 
-/* ---------------------------------------------------
-    LAYOUT COMPONENTS
---------------------------------------------------- */
+/* Bố cục chung */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -369,9 +365,7 @@ h6 {
   background: #f8fafc;
 }
 
-/* ---------------------------------------------------
-    DROPDOWN MENU
---------------------------------------------------- */
+/* Menu danh mục mở rộng */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -451,9 +445,7 @@ h6 {
   }
 }
 
-/* ---------------------------------------------------
-    BUTTONS
---------------------------------------------------- */
+/* Nút bấm */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -493,9 +485,7 @@ h6 {
   width: 100%;
 }
 
-/* ---------------------------------------------------
-    AUTH PAGES
---------------------------------------------------- */
+/* Trang đăng nhập / đăng ký */
 .auth-page {
   display: flex;
   align-items: center;
@@ -543,9 +533,7 @@ h6 {
   color: var(--text-muted);
 }
 
-/* ---------------------------------------------------
-    FORMS & ALERTS
---------------------------------------------------- */
+/* Biểu mẫu và Thông báo */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -602,9 +590,7 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
-/* ---------------------------------------------------
-    ARTICLE COMPONENTS
---------------------------------------------------- */
+/* Thẻ bài viết */
 .articles-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -721,9 +707,7 @@ h6 {
   margin-bottom: 1rem;
 }
 
-/* ---------------------------------------------------
-    COMMENTS SECTION
---------------------------------------------------- */
+/* Phần bình luận */
 .comments-section {
   margin-top: 4rem;
   padding-top: 2rem;
@@ -812,9 +796,7 @@ h6 {
   margin-bottom: 3rem;
 }
 
-/* ---------------------------------------------------
-    SEARCH BAR (PUBLIC)
---------------------------------------------------- */
+/* Thanh tìm kiếm */
 .search-bar {
   display: flex;
   align-items: center;
@@ -869,9 +851,7 @@ h6 {
   background: var(--primary-hover);
 }
 
-/* ---------------------------------------------------
-    FOOTER
---------------------------------------------------- */
+/* Chân trang */
 .footer {
   background-color: var(--white);
   padding: 3rem 0;
@@ -881,9 +861,7 @@ h6 {
   color: var(--text-muted);
 }
 
-/* ---------------------------------------------------
-    RESPONSIVE DESIGN (CONSOLIDATED)
---------------------------------------------------- */
+/* Giao diện di động */
 @media (max-width: 1200px) {
   .weather-widget {
     display: none;

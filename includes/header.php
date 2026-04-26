@@ -28,13 +28,12 @@ require_once __DIR__ . '/functions.php';
                         <span class="city">TP HCM</span>
                         <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
                         
-                        <!-- Custom Dropdown -->
+                        <!-- Danh sách thả xuống chọn địa điểm -->
                         <div class="location-dropdown">
                             <div class="dropdown-search">
                                 <i class="fas fa-search"></i>
                                 <input type="text" placeholder="Tìm địa điểm" id="city-search-input">
                             </div>
-                            <div class="city-list-wrapper">
                             <div class="city-list-wrapper">
                                 <div class="city-list" id="full-city-list">
                                     <div class="loading-cities" style="padding: 10px; font-size: 0.8rem; color: #94a3b8;">
@@ -84,7 +83,7 @@ require_once __DIR__ . '/functions.php';
                     <?php 
                     global $pdo;
                     $allCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
-                    $limit = 10; // Show more categories in the dedicated bar
+                    $limit = 10; // Số lượng danh mục hiển thị tối đa trên thanh điều hướng
                     $mainCategories = array_slice($allCategories, 0, $limit);
                     $moreCategories = array_slice($allCategories, $limit);
                     ?>

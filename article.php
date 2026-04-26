@@ -114,7 +114,7 @@ $uploadPath = 'assets/images/articles/';
             <?= $article['content'] ?>
         </div>
 
-        <!-- Comments Section -->
+        <!-- Phần bình luận -->
         <div class="comments-section">
             <h2 style="font-size: 1.5rem; margin-bottom: 2rem;">Bình luận (<?= count($comments) ?>)</h2>
 
@@ -164,7 +164,7 @@ $uploadPath = 'assets/images/articles/';
                                             <button type="button" onclick="confirmDelete(<?= $comment['id'] ?>)" style="background: none; border: none; color: red; cursor: pointer; padding: 0;"><i class="fas fa-trash"></i> Xóa</button>
                                         </form>
                                     </div>
-                                    <!-- Edit Form -->
+                                    <!-- Biểu mẫu sửa bình luận -->
                                     <form method="POST" action="" id="edit-form-<?= $comment['id'] ?>" style="display: none; margin-top: 10px;">
                                         <input type="hidden" name="action" value="update_comment">
                                         <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">

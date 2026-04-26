@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif ($password !== $confirm_password) {
         $error = "Mật khẩu không khớp.";
     } else {
-        // Check if username or email exists
+        // Kiểm tra xem tên đăng nhập hoặc email đã tồn tại chưa
         $stmt = $pdo->prepare("SELECT count(*) FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $email]);
         if ($stmt->fetchColumn() > 0) {
