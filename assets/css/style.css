@@ -109,7 +109,7 @@ h6 {
   font-weight: 600;
   color: var(--text-main);
   position: relative;
-  /* Required for dropdown positioning */
+  /* Cần thiết để định vị dropdown */
   padding: 0.5rem 0;
 }
 
@@ -120,8 +120,7 @@ h6 {
 .location-dropdown {
   display: none;
   position: absolute;
-  top: calc(100% - 5px);
-  /* Move closer to trigger */
+  /* Đưa gần vào trigger hơn */
   left: 0;
   width: 280px;
   background: #fff;
@@ -341,15 +340,13 @@ h6 {
   display: flex;
   flex: 0 1 auto;
   overflow-x: auto;
-  scrollbar-width: none;
-  /* Hide scrollbar for Firefox */
+  scrollbar-width: none; /* Ẩn scrollbar cho Firefox */
 }
 
+/* Ẩn scrollbar cho Chrome/Safari */
 .nav-cats::-webkit-scrollbar {
   display: none;
 }
-
-/* Hide scrollbar for Chrome/Safari */
 
 .nav-cats a {
   padding: 0.75rem 1.25rem;
@@ -670,7 +667,7 @@ h6 {
   padding-top: 1rem;
 }
 
-/* Single Article View */
+/* Trang chi tiết bài viết */
 .article-header {
   margin: 3rem 0;
   text-align: center;
@@ -866,68 +863,18 @@ h6 {
   .weather-widget {
     display: none;
   }
-
-  .search-bar {
-    width: 240px;
-  }
 }
 
 @media (max-width: 992px) {
   .nav-cats a {
     padding: 0.75rem 0.8rem;
   }
-
-  .search-bar {
-    width: 200px;
-  }
 }
 
 @media (max-width: 768px) {
-  .navbar-top .container {
-    flex-wrap: wrap;
-  }
-
-  .search-bar {
-    order: 3;
-    width: 100%;
-    margin: 0.75rem 0 0 0;
-  }
-
+  /* Ẩn thanh tìm kiếm và thanh danh mục trên màn hình nhỏ */
+  .search-bar,
   .navbar-bottom {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    box-shadow: var(--shadow-lg);
-  }
-
-  .navbar-bottom.active {
-    display: block;
-  }
-
-  .category-nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-cats {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .nav-cats a {
-    width: 100%;
-    padding: 1rem;
-    border-bottom: 1px solid #f1f5f9;
-  }
-
-  .nav-home {
-    display: none;
-  }
-
-  .mobile-menu-btn {
-    display: block;
   }
 }

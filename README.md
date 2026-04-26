@@ -115,6 +115,6 @@ Dự án sử dụng các công nghệ, thư viện CDN và Public APIs sau đ�
 
 ### 2. Dữ liệu APIs
 Dự án tích hợp module thời tiết thời gian thực ở thanh điều hướng sử dụng các Public APIs hoàn toàn miễn phí:
-- **Open API Tỉnh/Thành Việt Nam** (`provinces.open-api.vn/api/v2/`): Lấy danh sách 34 tỉnh/thành phố tại Việt Nam cho dropdown địa điểm.
+- **Open API Tỉnh/Thành Việt Nam** (`provinces.open-api.vn/api/v2/`): Lấy danh sách  tỉnh/thành phố tại Việt Nam cho dropdown địa điểm.
 - **OpenStreetMap Nominatim API** (`nominatim.openstreetmap.org`): Chuyển đổi tên tỉnh thành sang tọa độ (Geocoding) chuẩn xác.
 - **Open-Meteo API** (`api.open-meteo.com`): Truy xuất dữ liệu thời tiết (Nhiệt độ hiện tại, trạng thái thời tiết chuẩn WMO) qua hệ tọa độ.
