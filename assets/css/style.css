@@ -120,7 +120,7 @@ h6 {
 .location-dropdown {
   display: none;
   position: absolute;
-  /* Đưa gần vào trigger hơn */
+  top: calc(100% + 5px); /* Hiện ra bên dưới trigger, không che nhiệt độ */
   left: 0;
   width: 280px;
   background: #fff;
