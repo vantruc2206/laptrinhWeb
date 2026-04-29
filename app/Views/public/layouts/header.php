@@ -1,13 +1,5 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/functions.php';
-
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,13 +14,11 @@ require_once __DIR__ . '/functions.php';
         <div class="container">
             <div class="nav-left">
                 <a href="index.php" class="navbar-brand">BÁO HƠI MỚI</a>
-                
+
                 <div class="weather-widget">
                     <div class="location-info">
                         <span class="city">TP HCM</span>
                         <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
-                        
-                        <!-- Danh sách thả xuống chọn địa điểm -->
                         <div class="location-dropdown">
                             <div class="dropdown-search">
                                 <i class="fas fa-search"></i>
@@ -48,8 +38,8 @@ require_once __DIR__ . '/functions.php';
                         <span class="temp">34°</span>
                     </div>
                     <div class="current-date">
-                        <?php 
-                        $days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
+                        <?php
+                        $days = ["Chủ nhật","Thứ hai","Thứ ba","Thứ tư","Thứ năm","Thứ sáu","Thứ bảy"];
                         echo $days[date('w')] . ", " . date('d/m/Y');
                         ?>
                     </div>
@@ -62,8 +52,8 @@ require_once __DIR__ . '/functions.php';
             </form>
 
             <div class="nav-auth">
-                <?php if(isLoggedIn()): ?>
-                    <?php if(isAdmin()): ?>
+                <?php if (isLoggedIn()): ?>
+                    <?php if (isAdmin()): ?>
                         <a href="admin/index.php" class="admin-link">Trang quản trị</a>
                     <?php endif; ?>
                     <a href="auth/logout.php" class="logout-link">Đăng xuất</a>
@@ -78,29 +68,27 @@ require_once __DIR__ . '/functions.php';
         <div class="container">
             <div class="category-nav">
                 <a href="index.php" class="nav-home"><i class="fas fa-home"></i></a>
-                
                 <div class="nav-cats">
-                    <?php 
-                    global $pdo;
-                    $allCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC")->fetchAll();
-                    $limit = 10; // Số lượng danh mục hiển thị tối đa trên thanh điều hướng
+                    <?php
+                    use App\Models\CategoryModel;
+                    $categoryModel  = new CategoryModel();
+                    $allCategories  = $categoryModel->getAllCategories();
+                    $limit          = 10;
                     $mainCategories = array_slice($allCategories, 0, $limit);
                     $moreCategories = array_slice($allCategories, $limit);
                     ?>
-
-                    <?php foreach($mainCategories as $cat): ?>
+                    <?php foreach ($mainCategories as $cat): ?>
                         <a href="category.php?slug=<?= htmlspecialchars($cat['slug']) ?>"><?= htmlspecialchars($cat['name']) ?></a>
                     <?php endforeach; ?>
                 </div>
-
-                <?php if(!empty($moreCategories)): ?>
+                <?php if (!empty($moreCategories)): ?>
                     <div class="dropdown">
                         <input type="checkbox" id="nav-dropdown-check" class="dropdown-check">
                         <label for="nav-dropdown-check" class="dropdown-toggle">
                             <i class="fas fa-bars"></i>
                         </label>
                         <div class="dropdown-menu">
-                            <?php foreach($moreCategories as $cat): ?>
+                            <?php foreach ($moreCategories as $cat): ?>
                                 <a href="category.php?slug=<?= htmlspecialchars($cat['slug']) ?>"><?= htmlspecialchars($cat['name']) ?></a>
                             <?php endforeach; ?>
                         </div>

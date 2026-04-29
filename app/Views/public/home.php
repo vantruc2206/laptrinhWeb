@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../../includes/header.php'; ?>
+<?php require_once __DIR__ . '/layouts/header.php'; ?>
 
 <?php if (empty($articles)): ?>
     <div style='text-align:center; padding: 4rem 0;'><h2>Không có bài viết nào mới. Vui lòng quay lại sau!</h2></div>
@@ -67,4 +67,5 @@
 
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/../../../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/layouts/footer.php'; ?>
+

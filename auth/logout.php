@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/functions.php';
+require_once __DIR__ . '/../app/Helpers/functions.php';
 
 // Kiểm tra xem có phải Admin đang đăng xuất không trước khi hủy session
 $wasAdmin = isset($_SESSION['is_admin_login']);

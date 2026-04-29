@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../../../admin/includes/header.php'; ?>
+<?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <?php
 if (!function_exists('buildQuery')) {
@@ -203,4 +203,4 @@ if (!function_exists('buildQuery')) {
 </nav>
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/../../../../admin/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../layouts/footer.php'; ?>

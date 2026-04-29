@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/functions.php';
+require_once __DIR__ . '/../app/Helpers/functions.php';
 
 // Đảm bảo người dùng là admin
 if (!isAdmin()) {

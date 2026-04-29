@@ -11,7 +11,6 @@
                     e.preventDefault();
                     const href = this.getAttribute('href');
                     const type = this.getAttribute('data-type') || 'mục';
-                    
                     Swal.fire({
                         title: 'Thông báo',
                         text: `Bạn có chắc chắn muốn xóa ${type} này không? Hành động này không thể hoàn tác!`,
@@ -37,18 +36,13 @@
             if (alerts.length > 0) {
                 setTimeout(function() {
                     alerts.forEach(function(alert) {
-                        // Thêm hiệu ứng fadeOut của animate.css nếu element đang dùng animate.css
                         if (alert.classList.contains('animate__animated')) {
                             alert.classList.add('animate__fadeOut');
                         } else {
                             alert.style.transition = 'opacity 0.5s ease';
                             alert.style.opacity = '0';
                         }
-                        
-                        // Xóa hoàn toàn khỏi DOM sau khi hiệu ứng kết thúc (.5s)
-                        setTimeout(() => {
-                            alert.remove();
-                        }, 500);
+                        setTimeout(() => { alert.remove(); }, 500);
                     });
                 }, 1500);
             }

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/config/database.php';
 
 echo "<h3>Resetting Admin Password...</h3>";
 try {

@@ -9,31 +9,25 @@
 </footer>
 
 <script>
-// Cấu hình API
 const PROVINCE_API = 'https://provinces.open-api.vn/api/v2/';
-const GEO_API = 'https://nominatim.openstreetmap.org/search'; 
-const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
+const GEO_API      = 'https://nominatim.openstreetmap.org/search';
+const WEATHER_API  = 'https://api.open-meteo.com/v1/forecast';
 
-// Hàm làm sạch tên thành phố
 function cleanCityName(name) {
     if (!name) return "";
     return name.replace(/^(Thành phố trực thuộc Trung ương|Thành phố|Tỉnh)\s+/i, '').trim();
 }
 
-// Lấy và hiển thị danh sách tỉnh thành
 async function loadProvinces() {
     const listContainer = document.getElementById('full-city-list');
     if (!listContainer) return;
-
     try {
-        const response = await fetch(PROVINCE_API);
-        const provinces = await response.json(); 
-        
+        const response  = await fetch(PROVINCE_API);
+        const provinces = await response.json();
         listContainer.innerHTML = provinces.map(p => {
             const displayName = cleanCityName(p.name);
             return `<div class="city-item" data-full-name="${p.name}">${displayName}</div>`;
         }).join('');
-
         document.querySelectorAll('.city-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -41,57 +35,38 @@ async function loadProvinces() {
             });
         });
     } catch (e) {
-        listContainer.innerHTML = '<div style="padding:10px;color:red;">Lỗi tải danh sách (Error loading list)</div>';
+        listContainer.innerHTML = '<div style="padding:10px;color:red;">Lỗi tải danh sách</div>';
         console.error("Province fetch error:", e);
     }
 }
 
-// Lấy tọa độ và thông tin thời tiết
 async function getWeatherByCityName(fullName) {
     const cityDisplay = document.querySelector('.weather-widget .city');
     const tempDisplay = document.querySelector('.weather-widget .temp');
     const iconDisplay = document.querySelector('.weather-widget .weather-detail i');
-
     if (!cityDisplay || !tempDisplay) return;
 
     cityDisplay.innerText = cleanCityName(fullName);
     tempDisplay.innerHTML = '<i class="fas fa-circle-notch fa-spin" style="font-size: 0.8rem;"></i>';
 
     try {
-        let lat, lon; 
-
-        // Tối ưu hóa tìm kiếm: Thêm Vietnam để tránh nhầm lẫn quốc tế
         const searchQuery = `${fullName}, Vietnam`;
-        const geoRes = await fetch(`${GEO_API}?q=${encodeURIComponent(searchQuery)}&format=json&limit=1`, {
-            headers: { 'User-Agent': 'BaoHoiMoi/1.0' }
-        });
+        const geoRes  = await fetch(`${GEO_API}?q=${encodeURIComponent(searchQuery)}&format=json&limit=1`, { headers: { 'User-Agent': 'BaoHoiMoi/1.0' } });
         const geoData = await geoRes.json();
-        
-        if (!geoData || geoData.length === 0) {
-            throw new Error("Không tìm thấy tọa độ");
-        }
+        if (!geoData || geoData.length === 0) throw new Error("Không tìm thấy tọa độ");
 
-        lat = geoData[0].lat;
-        lon = geoData[0].lon;
-
-        // Cập nhật URL API: Lấy temperature_2m (nhiệt độ thực) và weather_code
-        // Thêm current=temperature_2m để lấy dữ liệu mới nhất thay vì dự báo chung
-        const weatherUrl = `${WEATHER_API}?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Asia%2FHo_Chi_Minh`;
-        
-        const weatherRes = await fetch(weatherUrl);
+        const lat        = geoData[0].lat;
+        const lon        = geoData[0].lon;
+        const weatherRes = await fetch(`${WEATHER_API}?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Asia%2FHo_Chi_Minh`);
         const weatherData = await weatherRes.json();
-        
-        // Truy xuất dữ liệu từ object 'current' mới của Open-Meteo
         const temp = Math.round(weatherData.current.temperature_2m);
         const code = weatherData.current.weather_code;
 
         tempDisplay.innerText = temp + '°C';
-        
-        // Cập nhật Icon dựa trên Weather Code (WMO Standard)
-        if (code <= 1) iconDisplay.className = 'fas fa-sun'; // Trời quang
-        else if (code <= 3) iconDisplay.className = 'fas fa-cloud-sun'; // Mây rải rác
-        else if (code <= 67) iconDisplay.className = 'fas fa-cloud-showers-heavy'; // Mưa
-        else iconDisplay.className = 'fas fa-bolt'; // Dông sét
+        if      (code <= 1)  iconDisplay.className = 'fas fa-sun';
+        else if (code <= 3)  iconDisplay.className = 'fas fa-cloud-sun';
+        else if (code <= 67) iconDisplay.className = 'fas fa-cloud-showers-heavy';
+        else                 iconDisplay.className = 'fas fa-bolt';
 
         localStorage.setItem('selected_city_fullName', fullName);
     } catch (e) {
@@ -100,39 +75,27 @@ async function getWeatherByCityName(fullName) {
     }
 }
 
-// Bộ lọc tìm kiếm
 document.getElementById('city-search-input')?.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase().trim();
     document.querySelectorAll('.city-item').forEach(item => {
-        const text = item.innerText.toLowerCase();
-        item.style.display = text.includes(term) ? 'block' : 'none';
+        item.style.display = item.innerText.toLowerCase().includes(term) ? 'block' : 'none';
     });
 });
 
-// Khởi tạo khi tải trang
 window.addEventListener('DOMContentLoaded', () => {
     loadProvinces();
     const saved = localStorage.getItem('selected_city_fullName') || 'Thành phố Hồ Chí Minh';
     getWeatherByCityName(saved);
 
-    // Header dính thông minh: Ẩn thanh trên khi cuộn xuống, hiện khi cuộn lên
     let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
+    const navbar    = document.querySelector('.navbar');
     const navbarTop = document.querySelector('.navbar-top');
-    
     if (navbar && navbarTop) {
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
-            const topHeight = navbarTop.offsetHeight;
-            
+            const topHeight     = navbarTop.offsetHeight;
             if (currentScroll > topHeight + 50) {
-                if (currentScroll > lastScroll) {
-                    // Cuộn xuống
-                    navbar.style.transform = `translateY(-${topHeight}px)`;
-                } else {
-                    // Cuộn lên
-                    navbar.style.transform = 'translateY(0)';
-                }
+                navbar.style.transform = currentScroll > lastScroll ? `translateY(-${topHeight}px)` : 'translateY(0)';
             } else {
                 navbar.style.transform = 'translateY(0)';
             }

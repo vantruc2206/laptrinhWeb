@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . '/includes/config.php';
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/app/Core/Database.php';
+$pdo = \App\Core\Database::getConnection();
+require_once __DIR__ . '/app/Helpers/functions.php';
 
 try {
     echo "<h3>Adding Sample Data...</h3>";

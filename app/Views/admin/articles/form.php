@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../../../../admin/includes/header.php'; ?>
+<?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <!-- Tiêu đề trang -->
 <div class="admin-header d-flex justify-content-between align-items-center mb-4">
@@ -121,4 +121,4 @@ tinymce.init({
     </form>
 </div>
 
-<?php require_once __DIR__ . '/../../../../admin/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../layouts/footer.php'; ?>

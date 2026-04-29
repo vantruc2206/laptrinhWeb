@@ -90,7 +90,7 @@ class ArticleController {
         $content     = $_POST['content'] ?? '';
         $status      = $_POST['status'] ?? 'published';
         
-        // Tạo slug đơn giản (trong hệ thống thực nên dùng hàm generateSlug() từ functions.php)
+        // Tạo slug đơn giản
         $slug = function_exists('generateSlug') ? generateSlug($title) : strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
 
         if (empty($title) || empty($category_id) || empty($summary) || empty($content)) {
