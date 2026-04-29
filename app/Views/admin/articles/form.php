@@ -24,7 +24,8 @@ tinymce.init({
     remove_script_host: false,
     convert_urls: true,
     branding: false,
-    promotion: false
+    promotion: false,
+    content_style: "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); *, *::before, *::after { box-sizing: border-box; } body { font-family: 'Inter', sans-serif; font-size: 1.125rem; line-height: 1.8; color: #1F2937; padding: 1.5rem; overflow-x: hidden; } p { margin-bottom: 1.5rem; } h2, h3 { margin-top: 2rem; margin-bottom: 1rem; color: #111827; font-weight: 700; } img, figure { max-width: 100% !important; height: auto !important; display: block; margin: 0 auto 1.5rem auto; border-radius: 8px; } iframe { max-width: 100%; border-radius: 8px; }"
 });
 </script>
 
@@ -106,9 +107,9 @@ tinymce.init({
                     <hr class="my-4" style="border-color: #cbd5e1;">
 
                     <button type="submit" class="btn btn-primary w-100 rounded-pill shadow d-flex align-items-center justify-content-center"
-                            style="padding: 1.1rem; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.5px; transition: all 0.3s ease;">
+                            style="padding: 0.8rem; font-weight: 500; transition: all 0.3s ease;">
                         <i class="fas fa-paper-plane me-2"></i>
-                        <?= $action == 'create' ? 'ĐĂNG BÀI NGAY' : 'CẬP NHẬT BÀI VIẾT' ?>
+                        <?= $action == 'create' ? 'Đăng bài ngay' : 'Cập nhật bài viết' ?>
                     </button>
                     
                     <a href="articles.php" class="btn btn-light w-100 rounded-pill mt-3 shadow-sm d-flex align-items-center justify-content-center" style="padding: 0.8rem; font-weight: 500;">

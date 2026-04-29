@@ -363,16 +363,16 @@ h6 {
 }
 
 /* Menu danh mục mở rộng */
-.dropdown {
+.nav-dropdown {
   position: relative;
   display: inline-block;
 }
 
-.dropdown-check {
+.nav-dropdown-check {
   display: none;
 }
 
-.dropdown-toggle {
+.nav-dropdown-toggle {
   color: var(--text-muted);
   font-weight: 500;
   cursor: pointer;
@@ -383,11 +383,11 @@ h6 {
   border-left: 1px solid #f1f5f9;
 }
 
-.dropdown-toggle:hover {
+.nav-dropdown-toggle:hover {
   color: var(--primary);
 }
 
-.dropdown-menu {
+.nav-dropdown-menu {
   display: none;
   position: absolute;
   top: calc(100% + 10px);
@@ -405,12 +405,12 @@ h6 {
   animation: dropdownFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.dropdown-check:checked~.dropdown-menu,
-.dropdown:hover .dropdown-menu {
+.nav-dropdown-check:checked~.nav-dropdown-menu,
+.nav-dropdown:hover .nav-dropdown-menu {
   display: block;
 }
 
-.dropdown-menu a {
+.nav-dropdown-menu a {
   display: block;
   padding: 0.75rem 1rem;
   color: var(--text-muted);
@@ -420,13 +420,13 @@ h6 {
   font-size: 0.9rem;
 }
 
-.dropdown-menu a:hover {
+.nav-dropdown-menu a:hover {
   background-color: var(--primary-soft);
   color: var(--primary);
   transform: translateX(5px);
 }
 
-.dropdown-menu a::after {
+.nav-dropdown-menu a::after {
   display: none;
 }
 
@@ -702,6 +702,20 @@ h6 {
 .article-body h3 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
+}
+
+.article-body iframe {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.article-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 1.5rem auto;
 }
 
 /* Phần bình luận */

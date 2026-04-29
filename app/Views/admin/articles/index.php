@@ -46,27 +46,44 @@ if (!function_exists('buildQuery')) {
 </div>
 
 <!-- ── Filter row -->
-<form method="GET" action="articles.php">
-    <input type="hidden" name="action" value="list">
-    <?php if ($search !== ''): ?><input type="hidden" name="search" value="<?= htmlspecialchars($search) ?>"><?php endif; ?>
-
     <div class="filter-row">
         <!-- Lọc danh mục -->
-        <select name="category_id" onchange="this.form.submit()">
-            <option value=""> Tất cả danh mục</option>
-            <?php foreach ($categories as $cat): ?>
-                <option value="<?= $cat['id'] ?>" <?= $filterCat == $cat['id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($cat['name']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+        <div class="btn-group">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" style="border: 1.5px solid #e5e7eb; border-radius: 999px; padding: 0.4rem 1.1rem; background: #fff; color: #374151; font-size: 0.9rem;">
+                <?php 
+                $selectedCatName = 'Tất cả danh mục';
+                foreach ($categories as $cat) {
+                    if ($filterCat == $cat['id']) {
+                        $selectedCatName = $cat['name'];
+                        break;
+                    }
+                }
+                echo htmlspecialchars($selectedCatName);
+                ?>
+            </button>
+            <ul class="dropdown-menu shadow-sm mt-1" style="border-radius: 12px; max-height: 300px; overflow-y: auto; font-size: 0.9rem;">
+                <li><a class="dropdown-item <?= $filterCat == 0 ? 'active' : '' ?>" href="articles.php?<?= buildQuery(['category_id' => '']) ?>">Tất cả danh mục</a></li>
+                <?php foreach ($categories as $cat): ?>
+                    <li><a class="dropdown-item <?= $filterCat == $cat['id'] ? 'active' : '' ?>" href="articles.php?<?= buildQuery(['category_id' => $cat['id']]) ?>"><?= htmlspecialchars($cat['name']) ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
 
         <!-- Lọc trạng thái -->
-        <select name="status_filter" onchange="this.form.submit()">
-            <option value=""> Tất cả trạng thái</option>
-            <option value="published" <?= $filterStatus === 'published' ? 'selected' : '' ?>> Đã xuất bản</option>
-            <option value="draft"     <?= $filterStatus === 'draft'     ? 'selected' : '' ?>> Bản nháp</option>
-        </select>
+        <div class="btn-group">
+            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" style="border: 1.5px solid #e5e7eb; border-radius: 999px; padding: 0.4rem 1.1rem; background: #fff; color: #374151; font-size: 0.9rem;">
+                <?php 
+                if ($filterStatus === 'published') echo 'Đã xuất bản';
+                elseif ($filterStatus === 'draft') echo 'Bản nháp';
+                else echo 'Tất cả trạng thái';
+                ?>
+            </button>
+            <ul class="dropdown-menu shadow-sm mt-1" style="border-radius: 12px; font-size: 0.9rem;">
+                <li><a class="dropdown-item <?= $filterStatus === '' ? 'active' : '' ?>" href="articles.php?<?= buildQuery(['status_filter' => '']) ?>">Tất cả trạng thái</a></li>
+                <li><a class="dropdown-item <?= $filterStatus === 'published' ? 'active' : '' ?>" href="articles.php?<?= buildQuery(['status_filter' => 'published']) ?>">Đã xuất bản</a></li>
+                <li><a class="dropdown-item <?= $filterStatus === 'draft' ? 'active' : '' ?>" href="articles.php?<?= buildQuery(['status_filter' => 'draft']) ?>">Bản nháp</a></li>
+            </ul>
+        </div>
 
         <!-- Xóa bộ lọc -->
         <?php if ($filterCat > 0 || $filterStatus !== '' || $search !== ''): ?>
@@ -84,7 +101,6 @@ if (!function_exists('buildQuery')) {
             </span>
         </div>
     </div>
-</form>
 
 <!-- Table card -->
 <div class="art-card">

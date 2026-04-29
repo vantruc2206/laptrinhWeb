@@ -82,12 +82,12 @@
                     <?php endforeach; ?>
                 </div>
                 <?php if (!empty($moreCategories)): ?>
-                    <div class="dropdown">
-                        <input type="checkbox" id="nav-dropdown-check" class="dropdown-check">
-                        <label for="nav-dropdown-check" class="dropdown-toggle">
+                    <div class="nav-dropdown">
+                        <input type="checkbox" id="nav-dropdown-check" class="nav-dropdown-check">
+                        <label for="nav-dropdown-check" class="nav-dropdown-toggle">
                             <i class="fas fa-bars"></i>
                         </label>
-                        <div class="dropdown-menu">
+                        <div class="nav-dropdown-menu">
                             <?php foreach ($moreCategories as $cat): ?>
                                 <a href="category.php?slug=<?= htmlspecialchars($cat['slug']) ?>"><?= htmlspecialchars($cat['name']) ?></a>
                             <?php endforeach; ?>

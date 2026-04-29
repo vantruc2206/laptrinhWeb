@@ -32,9 +32,7 @@
         <main class="admin-main">
             <header class="admin-header">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <button class="mobile-sidebar-toggle" onclick="document.querySelector('.admin-sidebar').classList.toggle('active')">
-                        <i class="fas fa-bars"></i>
-                    </button>
+
                     <h1 style="margin: 0;">Xin chào, <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
                 </div>
                 <div class="admin-user">
